@@ -1,0 +1,12 @@
+D:\Documents\GitHub\PersonalDictionary\Debug\applets\dictionary_applet.dll
+D:\Documents\GitHub\PersonalDictionary\Debug\applets\dictionary_applet.pdb
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csprojResolveAssemblyReference.cache
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DicWindow.baml
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DicWindow.g.cs
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet_MarkupCompile.cache
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.g.resources
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.Properties.Resources.resources
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csproj.GenerateResource.cache
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.dll
+D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.pdb

@@ -10,6 +10,8 @@ namespace PersonalDictionary
 {
     public class DB
     {
+
+        //tset
         public List<Word> Words { get; private set; }
         public List<Dictionary> Dictionaties { get; private set; }
         public List<AppletProgressInfo> TraingProgressApplest { get; private set; }
