@@ -24,21 +24,32 @@ namespace PersonalDictionary
             else if (word.ID == ID) return 0;
             else return 1;
         }
+
+        public override string ToString()
+        {
+            return String.Format("{0}, [{1}]", En, Ru);
+        }
     }
 
-    public class Dictionary
+    public class Dictionary : IComparable
     {
         public string Name { get; internal set; }
         public string Description { get; internal set; }
-        public List<Word> Words { get; private set; }
+        public List<Word> Words { get; internal set; }
 
         internal Dictionary() { Words = new List<Word>(); }
+
+        public int CompareTo(object obj)
+        {
+            Dictionary dic = (Dictionary)obj;
+            return String.Compare(dic.Name, this.Name);
+        }
     }
 
     public class AppletProgressInfo
     {
-        public Word Word { get; internal set; }
-        public int Progress { get; internal set; }
+        public string AppletID { get; internal set; }
+        public Dictionary<Word, int> WordProgress { get; internal set; }
     }
 
     public struct WordModifiedCreateInfo
@@ -52,12 +63,14 @@ namespace PersonalDictionary
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public Dictionary Dictionary { get; set; }
     }
 
     public struct CreateModifiedAppletProgressInfo
     {
         public Word Word { get; set; }
         public int Progress { get; set; }
+        public AppletProgressInfo AppletProgressInfo { get; set; }
     }
 
 }

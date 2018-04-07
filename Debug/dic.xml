@@ -2,6 +2,7 @@
 <library>
   <GlobalDictionary>
     <word id="1" en="test" ru="Тестирование, тест" date_add="10.10.10" date_modified="10.10.10" />
+	<word id="2" en="test2" ru="Тестирование, тест2" date_add="10.10.10" date_modified="10.10.10" />
     <word id="4" en="test2" ru="Тестирование, тест2" date_add="10.10.10" date_modified="10.10.10" />
     <word id="5" en=".ASP" ru="действующая (активная) страница сервера" date_add="06.04.2018 12:30:58" date_modified="06.04.2018 12:30:58" />
     <word id="6" en=".AU" ru="звуковой файл в Интернете" date_add="06.04.2018 12:30:58" date_modified="06.04.2018 12:30:58" />
@@ -3531,6 +3532,7 @@
     <word id="3530" en="aaaaaaaaaa" ru="bbbbbbbbbbbbb" date_add="06.04.2018 13:27:33" date_modified="06.04.2018 13:27:33" />
     <word id="3531" en="11111111" ru="1112222222" date_add="06.04.2018 13:28:18" date_modified="06.04.2018 13:28:18" />
     <word id="3532" en="555" ru="3333" date_add="06.04.2018 13:29:24" date_modified="06.04.2018 13:29:24" />
+    <word id="3533" en="gffghjfghj" ru="fghjgfhjfghjfghj" date_add="06.04.2018 22:39:48" date_modified="06.04.2018 22:39:48" />
   </GlobalDictionary>
   <PersonalDictionaries>
     <Dic name="Мои слова" descr="мой текущий словарь" words="#1#2" />

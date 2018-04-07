@@ -20,6 +20,8 @@ namespace PersonalDictionary
     /// </summary>
     public partial class DicWindow : Window, IApplet
     {
+        DB db = DB.GetInstance();
+
         #region IApplet
 
         public DicWindow()
@@ -59,15 +61,21 @@ namespace PersonalDictionary
                 return;
             }
 
-            DB.GetInstance().create_edit(info);
+            DB.GetInstance().Push(info);
 
             DB.GetInstance().Commit();
-            this.dataGrid.ItemsSource = DB.GetInstance().Words;
         }
 
         private void del_word_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Не реализовано", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            foreach (var item in this.dataGrid.SelectedItems)
+            {
+                WordModifiedCreateInfo info;
+                info.Word = item as Word;
+                DB.GetInstance().Delete(info);
+            }
+
+            this.dataGrid.Items.Refresh();
         }
 
         private void edit_word_Click(object sender, RoutedEventArgs e)
