@@ -31,6 +31,7 @@ namespace PersonalDictionary
         XDocument xdoc;
 
         private DB() { Init();}
+        ~DB() {Commit();}
 
         #region Реализация SingleInstance
 
@@ -131,6 +132,7 @@ namespace PersonalDictionary
 
         private void Init()
         {
+            
             if (Words == null) Words = new List<Word>();
             else Words.Clear();
 

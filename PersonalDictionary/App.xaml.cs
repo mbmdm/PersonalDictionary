@@ -171,6 +171,7 @@ namespace PersonalDictionary
 
             DB db = DB.GetInstance();
 
+
             db.Push(array);
             db.Commit();
         }
