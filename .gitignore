@@ -2,6 +2,8 @@
 *.exe
 *.dll
 *.pdb
+*.dll.config
+*.exe.config
 Debug/applets/PersonalDictionary.exe.config
 .vs/PersonalDictionary/v15/.suo
 .vs/PersonalDictionary/v15/Server/sqlite3/storage.ide
