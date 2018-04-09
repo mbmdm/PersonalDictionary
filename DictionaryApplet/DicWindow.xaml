@@ -41,7 +41,7 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Single" SelectionUnit="Cell" IsReadOnly="True" >
+        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Extended"  SelectionUnit="FullRow"  IsReadOnly="True" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Слово (англ.)" Binding="{Binding En}" MinWidth="50" />
                 <DataGridTextColumn Header="Перевод (рус.)" Binding="{Binding Ru}" MinWidth="150" />
