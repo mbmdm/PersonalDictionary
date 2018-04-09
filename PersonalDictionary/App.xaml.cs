@@ -29,28 +29,25 @@ namespace PersonalDictionary
         protected override void OnStartup(StartupEventArgs e)
         {
             try
-            { DB.GetInstance(); }
+            {
+                DB.GetInstance();
+
+                base.OnStartup(e);
+
+                InitBase();
+                InitNotify();
+
+                AttachApplets();
+                RegisterApplets();
+
+                applets.Values.ToArray()[0].Run();
+            }
             catch (Exception ex)
             {
-                string message = "Ошибка открытия XML файла с данными.\n";
-                message += ex.Message ;
-
-                if (ex.InnerException != null) { message += '\n' + ex.InnerException.Message; }
-
-                MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowFatalException(ex);
                 this.Shutdown();
-                return;
             }
 
-            base.OnStartup(e);
-
-            InitBase();
-            InitNotify();
-
-            AttachApplets();
-            RegisterApplets();
-
-            applets.Values.ToArray()[0].Run();
         }
 
         #endregion
@@ -94,6 +91,9 @@ namespace PersonalDictionary
             path += "\\applets";
 
             string[] dlls = System.IO.Directory.GetFiles(path, "*.dll");
+
+            if (dlls.Length == 0)
+                throw new Exception("Exception in PersonalDictionary.App.xaml.cs.AttachApplets().At list one applet must be in the \\applets\\.. directory");
 
             foreach (var dll_ka in dlls)
             {
@@ -148,6 +148,15 @@ namespace PersonalDictionary
                notify.ContextMenuStrip.Items.Insert(0, element);
            }
 
+        }
+
+        private void ShowFatalException(Exception ex)
+        {
+            string message = ex.Message;
+
+            if (ex.InnerException != null) { message += '\n' + ex.InnerException.Message; }
+
+            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         #endregion

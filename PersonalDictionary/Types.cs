@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PersonalDictionary
 {
-    public class Word : IComparable
+    public class Word : IComparable, ICloneable
     {
         internal int ID { get; set; }
         public string En { get; internal set; }
@@ -28,6 +28,18 @@ namespace PersonalDictionary
         public override string ToString()
         {
             return String.Format("{0}, [{1}]", En, Ru);
+        }
+
+        public object Clone()
+        {
+            Word _out = new Word();
+            _out.Add = Add;
+            _out.En = En;
+            _out.ID = ID;
+            _out.Ru = Ru;
+            _out.Modified = Modified;
+
+            return _out as object;
         }
     }
 

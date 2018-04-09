@@ -25,6 +25,7 @@ namespace PersonalDictionary
         public List<AppletProgressInfo> TraingProgressApplest { get; private set; }
 
         private List<WordModifiedCreateInfo> WordModifiedCreateInfos { get; set; }
+        private List<WordModifiedCreateInfo> WordDeleteInfos { get; set; } // Коллекция слов на удаление
         private List<DictionaryCreateIfon> DictionaryCreateIfons { get; set; }
         private List<CreateModifiedAppletProgressInfo> CreateModifiedAppletProgressInfos { get; set; }
 
@@ -71,7 +72,7 @@ namespace PersonalDictionary
         {
             if (info.Word == null) return;
 
-            Words.Remove(info.Word);
+            WordDeleteInfos.Add(info);
         }
 
         /// <summary>Полностью удаляет все данные о слове из базы данных: из глобального словаря, из всех персональных словарей, из всех результатов тренировок.</summary>
@@ -86,11 +87,17 @@ namespace PersonalDictionary
         /// <summary>Применяет все накопленные изменения, перезаписывает файл данных, обновляет все свойства объекта DB</summary>
         public void Commit()
         {
-            Commit_Word();
-            Commit_Dic();
-            Commit_Progress();
+            XDocument doc = new XDocument();
+            doc.Add(new XElement(root_xml_name));
 
-            xdoc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
+            Commit_Word(doc);
+            //Commit_Word();
+            Commit_Dic(doc);
+            Commit_Progress(doc);
+
+            //xdoc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
+
+            doc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
 
             Init();
         }
@@ -118,15 +125,76 @@ namespace PersonalDictionary
             }
         }
 
-        private void Commit_Dic()
+        private void Commit_Word(XDocument doc)
         {
+            doc.Element(root_xml_name).Add(new XElement(xml_global_dictionary_name));
+            var root = doc.Element(root_xml_name).Element(xml_global_dictionary_name);
 
+            #region Часть 1. Вносятся изменения в существующие слова
 
+            WordModifiedCreateInfos.Where(i => (i.Word != null)).ToList().ForEach(delegate(WordModifiedCreateInfo info)
+            {
+                if (info.Ru != string.Empty)
+                    info.Word.Ru = info.Ru;
+
+                if (info.En != string.Empty)
+                    info.Word.En = info.En;
+            });
+
+            #endregion
+
+            #region Часть 2. Удаляем слова
+
+            WordDeleteInfos.ForEach(delegate (WordModifiedCreateInfo info)
+            { Words.Remove(info.Word); });
+
+            #endregion
+
+            #region Часть 3. Записываем все в XDocument
+
+            Words.ForEach(delegate (Word w)
+            {
+                XElement xe = new XElement("word");
+                xe.Add(new XAttribute("id", w.ID));
+                xe.Add(new XAttribute("en", w.En));
+                xe.Add(new XAttribute("ru", w.Ru));
+                xe.Add(new XAttribute("date_add", w.Add));
+                xe.Add(new XAttribute("date_modified", DateTime.Now.ToString()));
+                root.Add(xe);
+            });
+
+            #endregion
+
+            #region Часть 4. Записываем новыве слова
+
+            int id = (Words.Count == 0) ? 0 : Words[Words.Count - 1].ID;
+
+            WordModifiedCreateInfos.Where(i => (i.Word == null)).ToList().ForEach(delegate (WordModifiedCreateInfo info)
+            {
+                id++;
+
+                XElement xe = new XElement("word");
+                xe.Add(new XAttribute("id", id));
+                xe.Add(new XAttribute("en", info.En));
+                xe.Add(new XAttribute("ru", info.Ru));
+                xe.Add(new XAttribute("date_add", DateTime.Now.ToString()));
+                xe.Add(new XAttribute("date_modified", DateTime.Now.ToString()));
+                root.Add(xe);
+            });
+
+            #endregion
         }
 
-        private void Commit_Progress()
+        private void Commit_Dic(XDocument doc)
         {
+            doc.Element(root_xml_name).Add(new XElement(xml_personal_dictionaries_name));
+            var root = doc.Element(root_xml_name).Element(xml_personal_dictionaries_name);
+        }
 
+        private void Commit_Progress(XDocument doc)
+        {
+            doc.Element(root_xml_name).Add(new XElement(xml_traing_progress_applest_name));
+            var root = doc.Element(root_xml_name).Element(xml_traing_progress_applest_name);
 
         }
 
@@ -144,6 +212,9 @@ namespace PersonalDictionary
 
             if (WordModifiedCreateInfos == null) WordModifiedCreateInfos = new List<WordModifiedCreateInfo>();
             else WordModifiedCreateInfos.Clear();
+
+            if (WordDeleteInfos == null) WordDeleteInfos = new List<WordModifiedCreateInfo>();
+            else WordDeleteInfos.Clear();
 
             xdoc = XDocument.Load(Environment.CurrentDirectory + "\\" + xml_Name);
 

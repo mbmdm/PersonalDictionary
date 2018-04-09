@@ -61,9 +61,13 @@ namespace PersonalDictionary
                 return;
             }
 
+            DB db = DB.GetInstance();
+
             DB.GetInstance().Push(info);
 
             DB.GetInstance().Commit();
+
+            this.dataGrid.Items.Refresh();
         }
 
         private void del_word_Click(object sender, RoutedEventArgs e)
@@ -74,6 +78,8 @@ namespace PersonalDictionary
                 info.Word = item as Word;
                 DB.GetInstance().Delete(info);
             }
+
+            DB.GetInstance().Commit();
 
             this.dataGrid.Items.Refresh();
         }
