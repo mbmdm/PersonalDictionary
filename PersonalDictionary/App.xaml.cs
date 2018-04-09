@@ -155,7 +155,7 @@ namespace PersonalDictionary
         #region Test
 
         void test()
-        {
+        {/*
             string[] words = File.ReadAllLines("List.txt", System.Text.Encoding.Default);
             List<WordModifiedCreateInfo> array = new List<WordModifiedCreateInfo>();
 
@@ -172,7 +172,7 @@ namespace PersonalDictionary
             DB db = DB.GetInstance();
 
             db.create_edit(array);
-            db.Commit();
+            db.Commit();*/
         }
 
         #endregion
