@@ -31,7 +31,7 @@ namespace PersonalDictionary
         XDocument xdoc;
 
         private DB() { Init();}
-        private ~DB() {Commot();}
+        ~DB() {Commit();}
 
         #region Реализация SingleInstance
 
