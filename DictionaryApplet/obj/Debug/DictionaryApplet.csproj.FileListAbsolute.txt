@@ -10,3 +10,14 @@ D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryAppl
 D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csproj.CoreCompileInputs.cache
 D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.dll
 D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.pdb
+E:\Programming\GitHub\PersonalDictionary\Debug\applets\dictionary_applet.dll
+E:\Programming\GitHub\PersonalDictionary\Debug\applets\dictionary_applet.pdb
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csprojResolveAssemblyReference.cache
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DicWindow.baml
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DicWindow.g.cs
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet_MarkupCompile.cache
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.g.resources
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.Properties.Resources.resources
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csproj.GenerateResource.Cache
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.dll
+E:\Programming\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.pdb

@@ -32,3 +32,10 @@ PersonalDictionary/obj/Debug/PersonalDictionary_MarkupCompile.cache
 PersonalDictionary/obj/Debug/PersonalDictionary_MarkupCompile.i.cache
 DictionaryApplet/obj/Debug/DictionaryApplet.csprojResolveAssemblyReference.cache
 PersonalDictionary/obj/Debug/PersonalDictionary_MarkupCompile.cache
+.vs/PersonalDictionary/v14/.suo
+*.xml
+*.cache
+DictionaryApplet/obj/Debug/DictionaryApplet.csproj.FileListAbsolute.txt
+DictionaryApplet/obj/Debug/DictionaryApplet.csproj.GenerateResource.cache
+DictionaryApplet/obj/Debug/DictionaryApplet.csprojResolveAssemblyReference.cache
+WordTranslation/obj/Debug/WordTranslation.csproj.FileListAbsolute.txt
