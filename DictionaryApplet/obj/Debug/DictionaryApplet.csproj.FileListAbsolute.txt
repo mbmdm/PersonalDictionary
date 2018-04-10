@@ -10,3 +10,14 @@ D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryAppl
 D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csproj.CoreCompileInputs.cache
 D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.dll
 D:\Documents\GitHub\PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.pdb
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csprojResolveAssemblyReference.cache
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\DicWindow.baml
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\DicWindow.g.cs
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet_MarkupCompile.cache
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.g.resources
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.Properties.Resources.resources
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\DictionaryApplet.csproj.GenerateResource.Cache
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\Debug\applets\dictionary_applet.dll
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\Debug\applets\dictionary_applet.pdb
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.dll
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\DictionaryApplet\obj\Debug\dictionary_applet.pdb

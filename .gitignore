@@ -1,14 +1,22 @@
 
 *.dll
 
+
 *.pdb
+
 
 *.exe
 
+
 *.dll.config
 *.exe.config
+
 /PersonalDictionary/obj/*
 /PersonalDictionary/obj/Debug/*
+
 /DictionaryApplet/obj/*
+
 /DictionaryApplet/obj/Debug/*
-/.vs/*
+
+.vs/*
+.vs/

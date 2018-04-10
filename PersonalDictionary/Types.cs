@@ -76,6 +76,8 @@ namespace PersonalDictionary
         public string Name { get; set; }
         public string Description { get; set; }
         public Dictionary Dictionary { get; set; }
+        public List<Word> WordsNew { get; set; }
+        public List<Word> WordsExclude { get; set; }
     }
 
     public struct CreateModifiedAppletProgressInfo

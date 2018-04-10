@@ -1,0 +1,11 @@
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\bin\Debug\PersonalDictionary.Test.exe.config
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\bin\Debug\PersonalDictionary.Test.exe
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\bin\Debug\PersonalDictionary.Test.pdb
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\bin\Debug\PersonalDictionary.exe
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\bin\Debug\PersonalDictionary.pdb
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\bin\Debug\PersonalDictionary.exe.config
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.csprojResolveAssemblyReference.cache
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.exe
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.pdb
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.Properties.Resources.resources
+D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.csproj.GenerateResource.Cache
