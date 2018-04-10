@@ -111,8 +111,11 @@ namespace PersonalDictionary
                         //Регистрация апплета в БД для сохранения результатов (прогресса)
                         if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.GetType().FullName).ToArray().Length == 0)
                         {
+                            string uid = asm.ManifestModule.Name.Substring(0, asm.ManifestModule.Name.LastIndexOf('.'));
+                            uid += "." + obj.GetType().FullName;
+
                             AppletData appletData = new AppletData();
-                            appletData.AppletID = obj.GetType().FullName;
+                            appletData.AppletID = uid;
                             DB.GetInstance().RegisterApplet(appletData);
                         }
                     }

@@ -219,7 +219,7 @@ namespace PersonalDictionary.Test
             list_.Add(new AppletDataInfo());
             list_.Add(new AppletDataInfo());
             var test =  db.ApplestsData[2];
-            list_[0]..AppletData = test;
+            //list_[0]..AppletData = test;
 
             //infos[0].Word = db.Words[0];
             //infos[0].Progress = 99;
