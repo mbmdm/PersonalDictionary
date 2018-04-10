@@ -54,24 +54,27 @@ namespace PersonalDictionary
         public int CompareTo(object obj)
         {
             Dictionary dic = (Dictionary)obj;
-            return String.Compare(dic.Name, this.Name);
+            return String.Compare(this.Name, dic.Name);
         }
     }
 
-    public class AppletProgressInfo
+    public class AppletData
     {
         public string AppletID { get; internal set; }
         public Dictionary<Word, int> WordProgress { get; internal set; }
+
+        internal AppletData() {  }
+
     }
 
-    public struct WordModifiedCreateInfo
+    public struct WordInfo
     {
         public Word Word { get; set; }
         public string En { get; set; }
         public string Ru { get; set; }
     }
 
-    public struct DictionaryCreateIfon
+    public struct DictionaryInfo
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -80,11 +83,11 @@ namespace PersonalDictionary
         public List<Word> WordsExclude { get; set; }
     }
 
-    public struct CreateModifiedAppletProgressInfo
+    public struct AppletDataInfo
     {
         public Word Word { get; set; }
         public int Progress { get; set; }
-        public AppletProgressInfo AppletProgressInfo { get; set; }
+        public AppletData AppletData { get; set; }
     }
 
 }

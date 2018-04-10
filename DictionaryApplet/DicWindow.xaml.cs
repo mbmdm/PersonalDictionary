@@ -51,7 +51,7 @@ namespace PersonalDictionary
 
         private void add_word_Click(object sender, RoutedEventArgs e)
         {
-            WordModifiedCreateInfo info = new WordModifiedCreateInfo();
+            WordInfo info = new WordInfo();
             info.En = en_tb.Text.Trim();
             info.Ru = ru_tb.Text.Trim();
 
@@ -74,7 +74,7 @@ namespace PersonalDictionary
         {
             foreach (var item in this.dataGrid.SelectedItems)
             {
-                WordModifiedCreateInfo info;
+                WordInfo info;
                 info.Word = item as Word;
                 DB.GetInstance().Delete(info);
             }

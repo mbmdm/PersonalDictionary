@@ -82,5 +82,26 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test2_resoult.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source_test4_dic.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test4_resoult.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source_test5_dic.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test5_resoult.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source_test6_dic.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test6_resoult.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

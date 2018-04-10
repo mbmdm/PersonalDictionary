@@ -8,7 +8,6 @@ D:\Documents\GitHub\PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDict
 D:\Documents\GitHub\PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.csproj.CoreCompileInputs.cache
 D:\Documents\GitHub\PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.exe
 D:\Documents\GitHub\PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.pdb
-D:\Documents\GitHub\PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.csprojResolveAssemblyReference.cache
 D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary\obj\Debug\App.g.cs
 D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary_MarkupCompile.cache
 D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.Properties.Resources.resources
@@ -18,3 +17,4 @@ D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDicti
 D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\Debug\PersonalDictionary.pdb
 D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.exe
 D:\Profiles\4272003\Рабочий стол\PersonalDictionary-aav_PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.pdb
+D:\Documents\GitHub\PersonalDictionary\PersonalDictionary\obj\Debug\PersonalDictionary.csprojResolveAssemblyReference.cache

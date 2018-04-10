@@ -107,6 +107,14 @@ namespace PersonalDictionary
                     try { obj = asm.CreateInstance(item.FullName) as IApplet; }
                     catch { }
                     if (obj != null) applets.Add(obj.GetType().FullName, obj);
+
+                    //Регистрация апплета в БД для сохранения результатов (прогресса)
+                    if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.GetType().FullName).ToArray().Length > 0)
+                    {
+                        AppletData appletData = new AppletData();
+                        appletData.AppletID = obj.GetType().FullName;
+                        DB.GetInstance().RegisterApplet(appletData);
+                    }
                 }
             }
         }
@@ -166,13 +174,13 @@ namespace PersonalDictionary
         void test()
         {
             string[] words = File.ReadAllLines("List.txt", System.Text.Encoding.Default);
-            List<WordModifiedCreateInfo> array = new List<WordModifiedCreateInfo>();
+            List<WordInfo> array = new List<WordInfo>();
 
             foreach (var item in words)
             {
                 var word = item.Split(new char[] { '=' });
 
-                WordModifiedCreateInfo createInfo = new WordModifiedCreateInfo();
+                WordInfo createInfo = new WordInfo();
                 createInfo.En = word[0].Trim();
                 createInfo.Ru = word[1].Trim();
                 array.Add(createInfo);

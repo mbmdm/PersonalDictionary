@@ -121,7 +121,28 @@
   <data name="source_empty_dic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\source_empty_dic.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="source_test4_dic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\source_test4_dic.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="source_test5_dic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\source_test5_dic.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="source_test6_dic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\source_test6_dic.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="test1_resoult" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\test1_resoult.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="test2_resoult" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\test2_resoult.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="test4_resoult" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\test4_resoult.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="test5_resoult" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\test5_resoult.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="test6_resoult" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\test6_resoult.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>
