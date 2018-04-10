@@ -129,7 +129,14 @@ namespace PersonalDictionary
 
         internal void RegisterApplet(AppletData applet)
         {
-            #error Реализовать
+            var root = xdoc.Element(root_xml_name).Element(xml_traing_progress_applest_name);
+
+            XElement xe = new XElement("applet");
+            xe.Add(new XAttribute("uid", applet.AppletID));
+            root.Add(xe);
+            xdoc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
+
+            Init();
         }
 
         #region Инкапсуляция
@@ -296,7 +303,7 @@ namespace PersonalDictionary
 
         }
 
-        private void Init()
+        internal void Init()
         { 
             if (Words == null) Words = new List<Word>();
             else Words.Clear();
@@ -436,10 +443,5 @@ namespace PersonalDictionary
         }
 
         #endregion
-
-        public static void TestClear()
-        {
-            DB.GetInstance().Init();
-        }
     }
 }

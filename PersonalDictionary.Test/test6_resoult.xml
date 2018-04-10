@@ -13,12 +13,13 @@
   </PersonalDictionaries>
   <TraingProgressApplest>
     <applet uid="test1">
-      <appletdata ref="2" progress="45"/>
-      <appletdata ref="3" progress="95"/>
+      <appletdata ref="2" progress="45" />
+      <appletdata ref="3" progress="95" />
     </applet>
     <applet uid="test2">
-      <appletdata ref="1" progress="11"/>
-      <appletdata ref="2" progress="22"/>
+      <appletdata ref="1" progress="11" />
+      <appletdata ref="2" progress="22" />
     </applet>
+    <applet uid="TestApplet_1" />
   </TraingProgressApplest>
 </library>

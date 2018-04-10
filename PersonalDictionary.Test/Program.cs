@@ -11,11 +11,11 @@ namespace PersonalDictionary.Test
     {
         static void Main(string[] args)
         {
-            /*test1();
+            test1();
             test2();
             test3();
             test4();
-            test5();*/
+            test5();
             test6();
 
             Console.Read();
@@ -53,7 +53,7 @@ namespace PersonalDictionary.Test
             SaveResourceFile("test2_resoult", "test2_resoult.xml");
             SaveResourceFile("source_empty_dic", "dic.xml");
 
-            DB.TestClear();
+            Testing.Clear();
 
             DB db = DB.GetInstance();
             
@@ -90,7 +90,7 @@ namespace PersonalDictionary.Test
             SaveResourceFile("source_empty_dic", "test3_resoult.xml");
             SaveResourceFile("source_empty_dic", "dic.xml");
 
-            DB.TestClear();
+            Testing.Clear();
 
             DB db = DB.GetInstance();
 
@@ -125,7 +125,7 @@ namespace PersonalDictionary.Test
             SaveResourceFile("test4_resoult", "test4_resoult.xml");
             SaveResourceFile("source_test4_dic", "dic.xml");
 
-            DB.TestClear();
+            Testing.Clear();
 
             DB db = DB.GetInstance();
 
@@ -153,7 +153,7 @@ namespace PersonalDictionary.Test
             SaveResourceFile("test5_resoult", "test5_resoult.xml");
             SaveResourceFile("source_test5_dic", "dic.xml");
 
-            DB.TestClear();
+            Testing.Clear();
 
             DB db = DB.GetInstance();
 
@@ -206,14 +206,33 @@ namespace PersonalDictionary.Test
             SaveResourceFile("test6_resoult", "test6_resoult.xml");
             SaveResourceFile("source_test6_dic", "dic.xml");
 
-            DB.TestClear();
+            Testing.Clear();
 
             DB db = DB.GetInstance();
+
+            //Добавление апплета
+            var data = Testing.GetAppletData("TestApplet_1");
+            Testing.RegisterApplet(data);
+
+            //Добавление в апплет данных о прогрессе слова
+            List<AppletDataInfo> list_ = new List<AppletDataInfo>();
+            list_.Add(new AppletDataInfo());
+            list_.Add(new AppletDataInfo());
+            var test =  db.ApplestsData[2];
+            list_[0]..AppletData = test;
+
+            //infos[0].Word = db.Words[0];
+            //infos[0].Progress = 99;
+            //infos[1] = new AppletDataInfo();
+            //infos[1].AppletData = db.ApplestsData[2];
+            //infos[1].Word = db.Words[1];
+            //infos[1].Progress = 33;
+            //db.Push(
 
 
             long wrongIndex;
 
-            if (!CompareFiles("dic.xml", "test5_resoult.xml", out wrongIndex))
+            if (!CompareFiles("dic.xml", "test6_resoult.xml", out wrongIndex))
                 Console.WriteLine("false (pos " + wrongIndex + ")");
             else Console.WriteLine("true");
         }

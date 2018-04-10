@@ -59,9 +59,7 @@ namespace PersonalDictionary
         {
             font = new System.Drawing.Font("Arial", 12);
             padding = new System.Windows.Forms.Padding(5);
-            applets = new Dictionary<string, IApplet>();
-            //applets.Add(typeof(DicWindow).FullName, new DicWindow());
-            
+            applets = new Dictionary<string, IApplet>();            
         }
 
         /// <summary>Инициализация NotifyIcon</summary>
@@ -106,15 +104,19 @@ namespace PersonalDictionary
                     IApplet obj = null;
                     try { obj = asm.CreateInstance(item.FullName) as IApplet; }
                     catch { }
-                    if (obj != null) applets.Add(obj.GetType().FullName, obj);
-
-                    //Регистрация апплета в БД для сохранения результатов (прогресса)
-                    if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.GetType().FullName).ToArray().Length > 0)
+                    if (obj != null)
                     {
-                        AppletData appletData = new AppletData();
-                        appletData.AppletID = obj.GetType().FullName;
-                        DB.GetInstance().RegisterApplet(appletData);
+                        applets.Add(obj.GetType().FullName, obj);
+
+                        //Регистрация апплета в БД для сохранения результатов (прогресса)
+                        if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.GetType().FullName).ToArray().Length == 0)
+                        {
+                            AppletData appletData = new AppletData();
+                            appletData.AppletID = obj.GetType().FullName;
+                            DB.GetInstance().RegisterApplet(appletData);
+                        }
                     }
+
                 }
             }
         }
