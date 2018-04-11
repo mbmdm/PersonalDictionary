@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace PersonalDictionary
 {
@@ -20,7 +22,7 @@ namespace PersonalDictionary
     /// </summary>
     public partial class DicWindow : Window, IApplet
     {
-        DB db = DB.GetInstance();
+        public List<Word> Words { get; set; }
 
         #region IApplet
 
@@ -28,22 +30,29 @@ namespace PersonalDictionary
         {
             InitializeComponent();
             this.Closing += DicWindow_Closing;
-            this.dataGrid.ItemsSource = DB.GetInstance().Words;
+            this.Loaded += MainWindow_Loaded;
+
+            this.Words = DB.GetInstance().Words;
         }
 
         void DicWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = true;
-            this.Hide();
+            this.Visibility = Visibility.Hidden;
+            e.Cancel = true;            
         }
 
-        public void Run() { this.ShowDialog(); }
+        public void Run() 
+        {
+            if (this.Visibility != Visibility.Visible)
+                this.ShowDialog();
+            else Activate();
+        }
 
         public string DisplayName() { return "Словарь"; }
 
         public int Position() { return int.MinValue; }
 
-        public Type GetType() { return typeof(DicWindow); }
+        public Type ToType() { return typeof(DicWindow); }
 
         public bool IsMainDialog() { return true; }
 
@@ -51,7 +60,7 @@ namespace PersonalDictionary
 
         private void add_word_Click(object sender, RoutedEventArgs e)
         {
-            WordModifiedCreateInfo info = new WordModifiedCreateInfo();
+            WordInfo info = new WordInfo();
             info.En = en_tb.Text.Trim();
             info.Ru = ru_tb.Text.Trim();
 
@@ -67,26 +76,80 @@ namespace PersonalDictionary
 
             DB.GetInstance().Commit();
 
-            this.dataGrid.Items.Refresh();
+            //this.dataGrid.Items.Refresh();
+            (dataGrid.ItemsSource as ICollectionView).Refresh();
         }
 
         private void del_word_Click(object sender, RoutedEventArgs e)
         {
             foreach (var item in this.dataGrid.SelectedItems)
             {
-                WordModifiedCreateInfo info;
+                WordInfo info;
                 info.Word = item as Word;
                 DB.GetInstance().Delete(info);
             }
 
             DB.GetInstance().Commit();
 
-            this.dataGrid.Items.Refresh();
+            (dataGrid.ItemsSource as ICollectionView).Refresh();
         }
 
         private void edit_word_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Не реализовано", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void en_tb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (dataGrid.ItemsSource is ICollectionView)
+            {
+                (dataGrid.ItemsSource as ICollectionView).Refresh();
+            }
+        }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            ICollectionView view = CollectionViewSource.GetDefaultView(DB.GetInstance().Words);
+            view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
+                                  (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()));
+            view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new TempConverter()));
+            //view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new TempConverter() ));
+            //view.GroupDescriptions.Add(new PropertyGroupDescription("En"));
+            dataGrid.ItemsSource = view;
+        }
+    }
+
+    class TempConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is DateTime)
+            {
+                string[] variants = { "Сегодня", "Вчера", "Месяц назад", "Год назад", "Давно" };
+
+                DateTime date = new DateTime(((DateTime)value).Year, ((DateTime)value).Month, ((DateTime)value).Day);
+                DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+                if (date == now)
+                    return variants[0];
+                else if ((now - date).Days == 1)
+                    return variants[1];
+                else if ((now - date).Days < 30)
+                    return variants[2];
+                else if ((now - date).Days < 362)
+                    return variants[3];
+                else if ((now - date).Days >= 362)
+                    return variants[4];
+
+                return "sort error";
+            }
+
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

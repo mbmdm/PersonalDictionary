@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<library>
+  <GlobalDictionary>
+    <word id="1" en="Word1" ru="Слово1" date_add="2018-04-10T13:05:04" date_modified="10.04.2018 20:54:46" />
+    <word id="2" en="Word2" ru="Слово2" date_add="2018-04-10T13:05:04" date_modified="10.04.2018 20:54:46" />
+    <word id="3" en="Word3" ru="Слово3" date_add="2018-04-10T13:05:04" date_modified="10.04.2018 20:54:46" />
+    <word id="4" en="Word4" ru="Слово4" date_add="2018-04-10T13:05:04" date_modified="10.04.2018 20:54:46" />
+  </GlobalDictionary>
+  <PersonalDictionaries>
+    <dictionary name="dic2_changed" descr="descr2_changed" words="#1#4" />
+    <dictionary name="dic3" descr="descr3" words="" />
+    <dictionary name="dic4" descr="descr4" words="#1#4#3" />
+  </PersonalDictionaries>
+  <TraingProgressApplest>
+    <applet uid="test1">
+      <appletdata ref="2" progress="45"/>
+      <appletdata ref="3" progress="95"/>
+    </applet>
+    <applet uid="test2">
+      <appletdata ref="1" progress="11"/>
+      <appletdata ref="2" progress="22"/>
+    </applet>
+  </TraingProgressApplest>
+</library>

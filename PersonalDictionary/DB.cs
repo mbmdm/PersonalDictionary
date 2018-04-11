@@ -20,21 +20,28 @@ namespace PersonalDictionary
 
         #endregion
 
+        #region Поля
+
+        public Dictionary CurrentDictionaty { get; set; }
         public List<Word> Words { get; private set; }
         public List<Dictionary> Dictionaties { get; private set; }
-        public List<AppletProgressInfo> TraingProgressApplest { get; private set; }
+        public List<AppletData> ApplestsData { get; private set; }
 
-        private List<WordModifiedCreateInfo> WordModifiedCreateInfos { get; set; }
-        private List<WordModifiedCreateInfo> WordDeleteInfos { get; set; } // Коллекция слов на удаление
-        private List<DictionaryCreateIfon> DictionaryCreateIfons { get; set; }
-        private List<CreateModifiedAppletProgressInfo> CreateModifiedAppletProgressInfos { get; set; }
+        private List<WordInfo> WordsInfo { get; set; }
+        private List<WordInfo> WordsInfoDelete { get; set; } // Коллекция слов на удаление
+        private List<DictionaryInfo> DictionariesInfo { get; set; }
+        private List<DictionaryInfo> DictionariesInfoDelete { get; set; } //Коллекция словарей на удаление
+        private List<AppletDataInfo> AppletsDataInfo { get; set; }
+        private List<AppletDataInfo> AppletsDataInfoDelete { get; set; }
 
         XDocument xdoc;
 
-        private DB() { Init();}
-        ~DB() {Commit();}
+        #endregion
 
-        #region Реализация SingleInstance
+        #region Реализация SingleInstance / Конструктор / Деструктор
+
+        private DB() { Init(); }
+        ~DB() { Commit(); }
 
         static DB db;        
         static DB() { db = new DB();}
@@ -42,47 +49,65 @@ namespace PersonalDictionary
 
         #endregion
 
+        #region Интерфейс
+
         /// <summary>Осуществляет внесение изменений в базу данных. Изменения будут применены после Commit().</summary>
         /// <param name="info">Если свойство Word != null, 
         /// то выполняется внесение изменений в существующий объкт Word в базе данных. 
         /// В противном случае выполняется занесение нового слова в базу</param>
-        public void Push(WordModifiedCreateInfo info) { WordModifiedCreateInfos.Add(info); }
+        public void Push(WordInfo info) { WordsInfo.Add(info); }
         /// <summary>Осуществляет внесение изменений в базу данных. Изменения будут применены после Commit().</summary>
-        /// <param name="info">см. описание к Push(WordModifiedCreateInfo info)</param>
-        public void Push(List<WordModifiedCreateInfo> info) { WordModifiedCreateInfos.AddRange(info); }
+        /// <param name="info">см. описание к Push(WordInfo info)</param>
+        public void Push(List<WordInfo> info) { WordsInfo.AddRange(info); }
         /// <summary>Осуществляет внесение изменений в базу данных. Изменения будут применены после Commit().</summary>
         /// <param name="info">Если свойство Dictionary != null, 
         /// то выполняется внесение изменений в существующий объкт Dictionary в базе данных. 
         /// В противном случае выполняется занесение нового словаря в базу</param>
-        public void Push(DictionaryCreateIfon info) { DictionaryCreateIfons.Add(info); }
+        public void Push(DictionaryInfo info) { DictionariesInfo.Add(info); }
         /// <summary>Осуществляет внесение изменений в базу данных. Изменения будут применены после Commit().</summary>
         /// <param name="info">см. описание к Push(DictionaryCreateIfon info)</param>
-        public void Push(List<DictionaryCreateIfon> info) { DictionaryCreateIfons.AddRange(info); }
+        public void Push(List<DictionaryInfo> info) { DictionariesInfo.AddRange(info); }
         /// <summary>Осуществляет внесение изменений в базу данных. Изменения будут применены после Commit().</summary>
         /// <param name="info">Ни одно из свойсвт не дожлно быть null. В случае если слово ранее тренировано,
         /// будет внесено изменение в существующую запись, в противном случае будет создана новая запись</param>
-        public void Push(CreateModifiedAppletProgressInfo info) { CreateModifiedAppletProgressInfos.Add(info); }
+        public void Push(AppletDataInfo info) { AppletsDataInfo.Add(info); }
         /// <summary>Осуществляет внесение изменений в базу данных. Изменения будут применены после Commit().</summary>
-        /// <param name="info">см. описание к Push(CreateModifiedAppletProgressInfo info)</param>
-        public void Push(List<CreateModifiedAppletProgressInfo> info) { CreateModifiedAppletProgressInfos.AddRange(info); }
+        /// <param name="info">см. описание к Push(AppletDataInfo info)</param>
+        public void Push(List<AppletDataInfo> info) { AppletsDataInfo.AddRange(info); }
 
         /// <summary>Полностью удаляет все данные о слове из базы данных: из глобального словаря, из всех персональных словарей, из всех результатов тренировок.</summary>
-        /// <param name="info">Свойство Word аргумета типа WordModifiedCreateInfo должно быть не null</param>
-        public void Delete(WordModifiedCreateInfo info) 
+        /// <param name="info">Свойство Word аргумета типа WordInfo должно быть не null</param>
+        public void Delete(WordInfo info) 
         {
             if (info.Word == null) return;
 
-            WordDeleteInfos.Add(info);
+            WordsInfoDelete.Add(info);
         }
 
         /// <summary>Полностью удаляет все данные о слове из базы данных: из глобального словаря, из всех персональных словарей, из всех результатов тренировок.</summary>
-        /// <param name="info">см. описание к Delete(WordModifiedCreateInfo info) </param>
-        public void Delete(WordModifiedCreateInfo[] info)
+        /// <param name="info">см. описание к Delete(WordInfo info) </param>
+        public void Delete(WordInfo[] info)
         {
             foreach (var item in info)
                 this.Delete(item);
         }
 
+        /// <summary>Полностью удаляет все данные о словеваре из базы данных</summary>
+        /// <param name="info">Свойство Dictionary аргумета типа DictionaryCreateIfon должно быть не null</param>
+        public void Delete(DictionaryInfo info)
+        {
+            if (info.Dictionary == null) return;
+
+            DictionariesInfoDelete.Add(info);
+        }
+
+        /// <summary>Полностью удаляет все данные о словеваре из базы данных</summary>
+        /// <param name="info">см. описание к Delete(DictionaryCreateIfon info)</param>
+        public void Delete(DictionaryInfo[] info)
+        {
+            foreach (var item in info)
+                this.Delete(item);
+        }
 
         /// <summary>Применяет все накопленные изменения, перезаписывает файл данных, обновляет все свойства объекта DB</summary>
         public void Commit()
@@ -91,7 +116,6 @@ namespace PersonalDictionary
             doc.Add(new XElement(root_xml_name));
 
             Commit_Word(doc);
-            //Commit_Word();
             Commit_Dic(doc);
             Commit_Progress(doc);
 
@@ -102,11 +126,26 @@ namespace PersonalDictionary
             Init();
         }
 
+        #endregion
+
+        internal void RegisterApplet(AppletData applet)
+        {
+            var root = xdoc.Element(root_xml_name).Element(xml_traing_progress_applest_name);
+
+            XElement xe = new XElement("applet");
+            xe.Add(new XAttribute("uid", applet.AppletID));
+            root.Add(xe);
+            xdoc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
+
+            Init();
+        }
+
         #region Инкапсуляция
 
+        [Obsolete("Не использовать. Будет удален. Вместо него Commit_Word(XDocument doc)")]
         private void Commit_Word()
         {
-            var create = WordModifiedCreateInfos.Where(i => i.Word == null).ToArray();
+            var create = WordsInfo.Where(i => i.Word == null).ToArray();
 
             int id = Words[Words.Count - 1].ID;
 
@@ -130,9 +169,21 @@ namespace PersonalDictionary
             doc.Element(root_xml_name).Add(new XElement(xml_global_dictionary_name));
             var root = doc.Element(root_xml_name).Element(xml_global_dictionary_name);
 
+            #region Часть 0. Удаляем из существующих словарей слова, стоящие на удалении
+
+            WordsInfoDelete.ForEach(delegate(WordInfo info)
+            {
+                Dictionaties.ForEach(delegate (Dictionary d)
+                {
+                    d.Words.Remove(info.Word);
+                });
+            });
+
+            #endregion
+
             #region Часть 1. Вносятся изменения в существующие слова
 
-            WordModifiedCreateInfos.Where(i => (i.Word != null)).ToList().ForEach(delegate(WordModifiedCreateInfo info)
+            WordsInfo.Where(i => (i.Word != null)).ToList().ForEach(delegate(WordInfo info)
             {
                 if (info.Ru != string.Empty)
                     info.Word.Ru = info.Ru;
@@ -145,7 +196,7 @@ namespace PersonalDictionary
 
             #region Часть 2. Удаляем слова
 
-            WordDeleteInfos.ForEach(delegate (WordModifiedCreateInfo info)
+            WordsInfoDelete.ForEach(delegate (WordInfo info)
             { Words.Remove(info.Word); });
 
             #endregion
@@ -169,7 +220,7 @@ namespace PersonalDictionary
 
             int id = (Words.Count == 0) ? 0 : Words[Words.Count - 1].ID;
 
-            WordModifiedCreateInfos.Where(i => (i.Word == null)).ToList().ForEach(delegate (WordModifiedCreateInfo info)
+            WordsInfo.Where(i => (i.Word == null)).ToList().ForEach(delegate (WordInfo info)
             {
                 id++;
 
@@ -189,32 +240,125 @@ namespace PersonalDictionary
         {
             doc.Element(root_xml_name).Add(new XElement(xml_personal_dictionaries_name));
             var root = doc.Element(root_xml_name).Element(xml_personal_dictionaries_name);
-        }
+
+            #region Часть 1. Вносятся изменения в существующие словари
+
+            DictionariesInfo.Where(i => (i.Dictionary != null)).ToList().ForEach(delegate (DictionaryInfo info)
+            {
+                if (info.Description != null) //Изменения в описание словаря
+                    if (info.Description != string.Empty)
+                        info.Dictionary.Description = info.Description;
+
+                if (info.Name != null) //Изменение в наименование словаря
+                    if (info.Name != string.Empty)
+                        info.Dictionary.Name = info.Name;
+
+                if (info.WordsNew != null && info.WordsNew.Count != 0) //Добавляем новые слова
+                    info.Dictionary.Words.AddRange(info.WordsNew);
+
+                if (info.WordsExclude != null && info.WordsExclude.Count != 0) //Исключаем слова из словаря
+                {
+                    info.WordsExclude.ForEach(delegate(Word w)
+                    {
+                        info.Dictionary.Words.Remove(w);
+                    });
+                }
+            });
+
+            #endregion
+
+            #region Часть 2. Удаляем словари
+
+            DictionariesInfoDelete.ForEach(delegate (DictionaryInfo info)
+            { Dictionaties.Remove(info.Dictionary); });
+
+            #endregion
+
+            #region Часть 3. Записываем все в XDocument
+
+            Dictionaties.ForEach(delegate (Dictionary d)
+            {
+                XElement xe = new XElement("dictionary");
+                xe.Add(new XAttribute("name", d.Name));
+                xe.Add(new XAttribute("descr", d.Description));
+
+                string words = string.Empty;
+
+                d.Words.ForEach(delegate (Word w)
+                { words += "#" + w.ID; });
+
+                xe.Add(new XAttribute("words", words));
+
+                root.Add(xe);
+            });
+
+                #endregion
+            }
 
         private void Commit_Progress(XDocument doc)
         {
             doc.Element(root_xml_name).Add(new XElement(xml_traing_progress_applest_name));
             var root = doc.Element(root_xml_name).Element(xml_traing_progress_applest_name);
 
+            #region Часть 1. Вносим изменения в прогресс апплетов
+
+            AppletsDataInfo.ForEach(delegate (AppletDataInfo info)
+            {
+                if (info.AppletData.WordProgress.Keys.Contains(info.Word))
+                    info.AppletData.WordProgress[info.Word] = info.Progress;
+                else info.AppletData.WordProgress.Add(info.Word, info.Progress);
+            });
+
+            #endregion
+
+            #region Часть 2. Записываем все в XDocument
+
+            ApplestsData.ForEach(delegate (AppletData data)
+            {
+                XElement xe = new XElement("applet");
+                xe.Add(new XAttribute("uid", data.AppletID));
+                data.WordProgress.Keys.ToList().ForEach(delegate (Word w)
+                {
+                    XElement temp = new XElement("appletdata");
+                    temp.Add(new XAttribute("ref", w.ID));
+                    temp.Add(new XAttribute("progress", data.WordProgress[w]));
+                    xe.Add(temp);
+                });
+
+                root.Add(xe);
+            });
+
+            #endregion
         }
 
-        private void Init()
-        {
-            
+        internal void Init()
+        { 
             if (Words == null) Words = new List<Word>();
             else Words.Clear();
 
             if (Dictionaties == null) Dictionaties = new List<Dictionary>();
             else Dictionaties.Clear();
 
-            if (TraingProgressApplest == null) TraingProgressApplest = new List<AppletProgressInfo>();
-            else TraingProgressApplest.Clear();
+            if (ApplestsData == null) ApplestsData = new List<AppletData>();
+            else ApplestsData.Clear();
 
-            if (WordModifiedCreateInfos == null) WordModifiedCreateInfos = new List<WordModifiedCreateInfo>();
-            else WordModifiedCreateInfos.Clear();
+            if (WordsInfo == null) WordsInfo = new List<WordInfo>();
+            else WordsInfo.Clear();
 
-            if (WordDeleteInfos == null) WordDeleteInfos = new List<WordModifiedCreateInfo>();
-            else WordDeleteInfos.Clear();
+            if (WordsInfoDelete == null) WordsInfoDelete = new List<WordInfo>();
+            else WordsInfoDelete.Clear();
+
+            if (DictionariesInfo == null) DictionariesInfo = new List<DictionaryInfo>();
+            else DictionariesInfo.Clear();
+
+            if (DictionariesInfoDelete == null) DictionariesInfoDelete = new List<DictionaryInfo>();
+            else DictionariesInfoDelete.Clear();
+
+            if (AppletsDataInfo == null) AppletsDataInfo = new List<AppletDataInfo>();
+            else AppletsDataInfo.Clear();
+
+            if (AppletsDataInfoDelete == null) AppletsDataInfoDelete = new List<AppletDataInfo>();
+            else AppletsDataInfoDelete.Clear();
 
             xdoc = XDocument.Load(Environment.CurrentDirectory + "\\" + xml_Name);
 
@@ -263,6 +407,11 @@ namespace PersonalDictionary
             }
 
             Dictionaties.Sort();
+
+            if (this.CurrentDictionaty == null && this.Dictionaties.Count != 0)
+                CurrentDictionaty = Dictionaties[0];
+            else if (this.CurrentDictionaty != null && !this.Dictionaties.Contains(CurrentDictionaty))
+                CurrentDictionaty = Dictionaties[0];
         }
 
         private void Init_Progress()
@@ -271,9 +420,9 @@ namespace PersonalDictionary
 
             foreach (var e in root.Elements())
             {
-                AppletProgressInfo app_info = new AppletProgressInfo();
+                AppletData app_info = new AppletData();
                 {
-                    app_info.AppletID = e.Attribute("appletUID").Value.ToString();
+                    app_info.AppletID = e.Attribute("uid").Value.ToString();
                     app_info.WordProgress = new Dictionary<Word, int>();
 
                     foreach (var e_ in e.Elements())
@@ -287,7 +436,7 @@ namespace PersonalDictionary
                     }
                 };
 
-                TraingProgressApplest.Add(app_info);
+                ApplestsData.Add(app_info);
             }
         }
 

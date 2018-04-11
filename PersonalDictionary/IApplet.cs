@@ -24,7 +24,7 @@ namespace PersonalDictionary
         int Position();
         /// <summary>typedef(...)</summary>
         /// <returns></returns>
-        Type GetType();
+        Type ToType();
         /// <summary>
         /// Если возвращает true, то именно этот диалог будет открываться по 2х клику на Notify
         /// </summary>

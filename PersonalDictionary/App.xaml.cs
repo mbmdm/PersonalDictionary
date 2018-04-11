@@ -60,8 +60,6 @@ namespace PersonalDictionary
             font = new System.Drawing.Font("Arial", 12);
             padding = new System.Windows.Forms.Padding(5);
             applets = new Dictionary<string, IApplet>();
-            //applets.Add(typeof(DicWindow).FullName, new DicWindow());
-            
         }
 
         /// <summary>Инициализация NotifyIcon</summary>
@@ -106,7 +104,22 @@ namespace PersonalDictionary
                     IApplet obj = null;
                     try { obj = asm.CreateInstance(item.FullName) as IApplet; }
                     catch { }
-                    if (obj != null) applets.Add(obj.GetType().FullName, obj);
+                    if (obj != null)
+                    {
+                        applets.Add(obj.ToType().FullName, obj);
+
+                        //Регистрация апплета в БД для сохранения результатов (прогресса)
+                        if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.ToType().FullName).ToArray().Length == 0)
+                        {
+                            string uid = asm.ManifestModule.Name.Substring(0, asm.ManifestModule.Name.LastIndexOf('.'));
+                            uid += "." + obj.ToType().FullName;
+
+                            AppletData appletData = new AppletData();
+                            appletData.AppletID = uid;
+                            DB.GetInstance().RegisterApplet(appletData);
+                        }
+                    }
+
                 }
             }
         }
@@ -131,9 +144,7 @@ namespace PersonalDictionary
                element.Margin = padding;
                element.Click += delegate(object sender, EventArgs e) {
                    try
-                   {
-                       item.Run();
-                   }
+                   { item.Run(); }
                    catch (Exception ex)
                    { 
                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -166,13 +177,13 @@ namespace PersonalDictionary
         void test()
         {
             string[] words = File.ReadAllLines("List.txt", System.Text.Encoding.Default);
-            List<WordModifiedCreateInfo> array = new List<WordModifiedCreateInfo>();
+            List<WordInfo> array = new List<WordInfo>();
 
             foreach (var item in words)
             {
                 var word = item.Split(new char[] { '=' });
 
-                WordModifiedCreateInfo createInfo = new WordModifiedCreateInfo();
+                WordInfo createInfo = new WordInfo();
                 createInfo.En = word[0].Trim();
                 createInfo.Ru = word[1].Trim();
                 array.Add(createInfo);
