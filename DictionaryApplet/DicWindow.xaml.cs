@@ -112,10 +112,13 @@ namespace PersonalDictionary
             ICollectionView view = CollectionViewSource.GetDefaultView(DB.GetInstance().Words);
             view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
                                   (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()));
-            view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new TempConverter()));
-            //view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new TempConverter() ));
-            //view.GroupDescriptions.Add(new PropertyGroupDescription("En"));
+
             dataGrid.ItemsSource = view;
+            view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new TempConverter()));
+
+            
+
+            view.SortDescriptions.Add(new SortDescription("Add", ListSortDirection.Descending));
         }
     }
 
