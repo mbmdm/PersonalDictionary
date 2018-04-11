@@ -129,7 +129,7 @@ namespace PersonalDictionary
             Button b = sender as Button;
             
 
-            if ((b.Content as Image) == null || ((b.Content as Image).Name == "off"))
+            if (((b.Content as Image).Name == "off"))
             {
                 Uri uri = new Uri("img/marker1.jpg", UriKind.Relative);
                 (b.Content as Image).Source = new BitmapImage(uri);
