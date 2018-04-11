@@ -120,6 +120,28 @@ namespace PersonalDictionary
 
             view.SortDescriptions.Add(new SortDescription("Add", ListSortDirection.Descending));
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is Button))
+                return;
+
+            Button b = sender as Button;
+            
+
+            if ((b.Content as Image) == null || ((b.Content as Image).Name == "off"))
+            {
+                Uri uri = new Uri("img/marker1.jpg", UriKind.Relative);
+                (b.Content as Image).Source = new BitmapImage(uri);
+                (b.Content as Image).Name = "on";
+            }
+            else
+            {
+                Uri uri = new Uri("img/marker3.jpg", UriKind.Relative);
+                (b.Content as Image).Source = new BitmapImage(uri);
+                (b.Content as Image).Name = "off";
+            }
+        }
     }
 
     class TempConverter : IValueConverter

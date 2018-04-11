@@ -1,0 +1,13 @@
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\bin\Debug\PersonalDictionary.Test.exe.config
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\bin\Debug\PersonalDictionary.Test.exe
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\bin\Debug\PersonalDictionary.Test.pdb
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\bin\Debug\PersonalDictionary.exe
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\bin\Debug\PersonalDictionary.pdb
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\bin\Debug\PersonalDictionary.exe.config
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.csprojResolveAssemblyReference.cache
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.Properties.Resources.resources
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.csproj.GenerateResource.cache
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.csproj.CopyComplete
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.exe
+D:\Documents\GitHub\PersonalDictionary\Tests\PersonalDictionary.Test\obj\Debug\PersonalDictionary.Test.pdb
