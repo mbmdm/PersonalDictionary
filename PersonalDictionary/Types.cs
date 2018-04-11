@@ -13,8 +13,12 @@ namespace PersonalDictionary
         public string Ru { get; internal set; }
         public DateTime Add { get; internal set; }
         public DateTime Modified { get; internal set; }
+        public string Test { get; set; }
+        static Random r;
 
-        internal Word() { }
+        static Word() { r = new Random(); }
+
+        internal Word() { Test = "test_" + (Word.r.Next(0,10)%2).ToString(); }
 
         public int CompareTo(object obj)
         {

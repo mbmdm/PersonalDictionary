@@ -22,6 +22,7 @@ namespace PersonalDictionary
 
         #region Поля
 
+        public Dictionary CurrentDictionaty { get; set; }
         public List<Word> Words { get; private set; }
         public List<Dictionary> Dictionaties { get; private set; }
         public List<AppletData> ApplestsData { get; private set; }
@@ -299,8 +300,35 @@ namespace PersonalDictionary
             doc.Element(root_xml_name).Add(new XElement(xml_traing_progress_applest_name));
             var root = doc.Element(root_xml_name).Element(xml_traing_progress_applest_name);
 
+            #region Часть 1. Вносим изменения в прогресс апплетов
 
+            AppletsDataInfo.ForEach(delegate (AppletDataInfo info)
+            {
+                if (info.AppletData.WordProgress.Keys.Contains(info.Word))
+                    info.AppletData.WordProgress[info.Word] = info.Progress;
+                else info.AppletData.WordProgress.Add(info.Word, info.Progress);
+            });
 
+            #endregion
+
+            #region Часть 2. Записываем все в XDocument
+
+            ApplestsData.ForEach(delegate (AppletData data)
+            {
+                XElement xe = new XElement("applet");
+                xe.Add(new XAttribute("uid", data.AppletID));
+                data.WordProgress.Keys.ToList().ForEach(delegate (Word w)
+                {
+                    XElement temp = new XElement("appletdata");
+                    temp.Add(new XAttribute("ref", w.ID));
+                    temp.Add(new XAttribute("progress", data.WordProgress[w]));
+                    xe.Add(temp);
+                });
+
+                root.Add(xe);
+            });
+
+            #endregion
         }
 
         internal void Init()
@@ -379,6 +407,11 @@ namespace PersonalDictionary
             }
 
             Dictionaties.Sort();
+
+            if (this.CurrentDictionaty == null && this.Dictionaties.Count != 0)
+                CurrentDictionaty = Dictionaties[0];
+            else if (this.CurrentDictionaty != null && !this.Dictionaties.Contains(CurrentDictionaty))
+                CurrentDictionaty = Dictionaties[0];
         }
 
         private void Init_Progress()

@@ -54,7 +54,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PersonalDictionary\PersonalDictionary.csproj">
+    <ProjectReference Include="..\..\PersonalDictionary\PersonalDictionary.csproj">
       <Project>{094bb9f9-cb8d-4e2c-a17c-481a92052db7}</Project>
       <Name>PersonalDictionary</Name>
     </ProjectReference>

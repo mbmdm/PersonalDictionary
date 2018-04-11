@@ -54,6 +54,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="DicWindow.xaml.cs">
       <DependentUpon>DicWindow.xaml</DependentUpon>
     </Compile>

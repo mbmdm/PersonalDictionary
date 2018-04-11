@@ -39,10 +39,10 @@ namespace PersonalDictionary.Test
             db.Push(info1);
             db.Commit();
 
-            long wrongIndex;
+            int wrongIndex;
 
-            if (!CompareFiles("dic.xml", "test1_resoult.xml", out wrongIndex))
-                Console.WriteLine("false (pos " + wrongIndex + ")");
+            if (!CompareFiles2("dic.xml", "test1_resoult.xml", out wrongIndex))
+                Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");            
         }
 
@@ -76,10 +76,10 @@ namespace PersonalDictionary.Test
             db.Push(info2);
             db.Commit();
 
-            long wrongIndex;
+            int wrongIndex;
 
-            if (!CompareFiles("dic.xml", "test2_resoult.xml", out wrongIndex))
-                Console.WriteLine("false (pos " + wrongIndex + ")");
+            if (!CompareFiles2("dic.xml", "test2_resoult.xml", out wrongIndex))
+                Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");
         }
 
@@ -111,10 +111,10 @@ namespace PersonalDictionary.Test
             db.Delete(info3);
             db.Commit();
 
-            long wrongIndex;
+            int wrongIndex;
 
-            if (!CompareFiles("dic.xml", "test3_resoult.xml", out wrongIndex))
-                Console.WriteLine("false (pos " + wrongIndex + ")");
+            if (!CompareFiles2("dic.xml", "test3_resoult.xml", out wrongIndex))
+                Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");
         }
 
@@ -139,10 +139,10 @@ namespace PersonalDictionary.Test
             db.Delete(info2);
             db.Commit();
 
-            long wrongIndex;
+            int wrongIndex;
 
-            if (!CompareFiles("dic.xml", "test4_resoult.xml", out wrongIndex))
-                Console.WriteLine("false (pos " + wrongIndex + ")");
+            if (!CompareFiles2("dic.xml", "test4_resoult.xml", out wrongIndex))
+                Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");
         }
 
@@ -192,10 +192,10 @@ namespace PersonalDictionary.Test
 
             db.Commit();
 
-            long wrongIndex;
+            int wrongIndex;
 
-            if (!CompareFiles("dic.xml", "test5_resoult.xml", out wrongIndex))
-                Console.WriteLine("false (pos " + wrongIndex + ")");
+            if (!CompareFiles2("dic.xml", "test5_resoult.xml", out wrongIndex))
+                Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");
         }
 
@@ -215,25 +215,36 @@ namespace PersonalDictionary.Test
             Testing.RegisterApplet(data);
 
             //Добавление в апплет данных о прогрессе слова
-            List<AppletDataInfo> list_ = new List<AppletDataInfo>();
-            list_.Add(new AppletDataInfo());
-            list_.Add(new AppletDataInfo());
-            var test =  db.ApplestsData[2];
-            //list_[0]..AppletData = test;
+            AppletDataInfo info1 = new AppletDataInfo();
+            info1.AppletData = db.ApplestsData[2];
+            info1.Word = db.Words[0];
+            info1.Progress = 99;
+            db.Push(info1);
+            AppletDataInfo info2 = new AppletDataInfo();
+            info2 = new AppletDataInfo();
+            info2.AppletData = db.ApplestsData[2];
+            info2.Word = db.Words[1];
+            info2.Progress = 33;
+            db.Push(info2);
 
-            //infos[0].Word = db.Words[0];
-            //infos[0].Progress = 99;
-            //infos[1] = new AppletDataInfo();
-            //infos[1].AppletData = db.ApplestsData[2];
-            //infos[1].Word = db.Words[1];
-            //infos[1].Progress = 33;
-            //db.Push(
+            //Изменяем прогресс слова в апплете и добаляем прогресс о новом слове
+            AppletDataInfo info3 = new AppletDataInfo();
+            info3.AppletData = db.ApplestsData[0];
+            info3.Word = db.Words[1];
+            info3.Progress = 100;
+            db.Push(info3);
+            AppletDataInfo info4 = new AppletDataInfo();
+            info4.AppletData = db.ApplestsData[0];
+            info4.Word = db.Words[3];
+            info4.Progress = 10;
+            db.Push(info4);
 
+            db.Commit();
 
-            long wrongIndex;
+            int wrongIndex;
 
-            if (!CompareFiles("dic.xml", "test6_resoult.xml", out wrongIndex))
-                Console.WriteLine("false (pos " + wrongIndex + ")");
+            if (!CompareFiles2("dic.xml", "test6_resoult.xml", out wrongIndex))
+                Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");
         }
 
@@ -241,6 +252,7 @@ namespace PersonalDictionary.Test
 
         #region Инкапсуляция
 
+        [Obsolete]
         static bool CompareFiles(string f1, string f2, out long position)
         {
             position = 0;
@@ -299,6 +311,61 @@ namespace PersonalDictionary.Test
             position = fs1.Position;
             fs1.Close(); fs2.Close();
             return true;
+        }
+
+        static bool CompareFiles2(string f1, string f2, out int wrongLine)
+        {
+            wrongLine = -1;
+            bool flag = true;
+
+            StreamReader sr1 = new StreamReader(f1, Encoding.UTF8);
+            StreamReader sr2 = new StreamReader(f2, Encoding.UTF8);
+
+            string str1 = string.Empty;
+            string str2 = string.Empty;
+
+            while (true)
+            {
+                if (sr1.EndOfStream && sr2.EndOfStream)
+                    break;
+
+                wrongLine++;
+
+                str1 = sr1.ReadLine(); str1 = RemoveDateAtt(str1);
+                str2 = sr2.ReadLine(); str2 = RemoveDateAtt(str2);
+
+                if (str1 != str2)
+                { flag = false; break; }
+            }
+
+            sr1.Close(); sr2.Close();
+            return flag;
+        }
+
+        static string RemoveDateAtt(string str)
+        {
+            string _out = str;
+
+            if (str == null)
+                return string.Empty;
+
+            if (str.Contains("date_add="))
+            {
+                int startIndex = _out.IndexOf("date_add=");
+                int endIndex =_out.Substring(startIndex + 10).IndexOf('"')+1 ;
+                _out = _out.Remove(startIndex, endIndex + 10);
+            }
+
+            if (str.Contains("date_modified="))
+            {
+                int startIndex = _out.IndexOf("date_modified=");
+                int endIndex = _out.Substring(startIndex + 15).IndexOf('"')+1;
+                _out = _out.Remove(startIndex, endIndex + 15);
+            }
+
+            return _out;
+
+
         }
 
         static void SaveResourceFile(string resource, string filename)

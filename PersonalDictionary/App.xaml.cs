@@ -59,7 +59,7 @@ namespace PersonalDictionary
         {
             font = new System.Drawing.Font("Arial", 12);
             padding = new System.Windows.Forms.Padding(5);
-            applets = new Dictionary<string, IApplet>();            
+            applets = new Dictionary<string, IApplet>();
         }
 
         /// <summary>Инициализация NotifyIcon</summary>
@@ -106,13 +106,13 @@ namespace PersonalDictionary
                     catch { }
                     if (obj != null)
                     {
-                        applets.Add(obj.GetType().FullName, obj);
+                        applets.Add(obj.ToType().FullName, obj);
 
                         //Регистрация апплета в БД для сохранения результатов (прогресса)
-                        if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.GetType().FullName).ToArray().Length == 0)
+                        if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.ToType().FullName).ToArray().Length == 0)
                         {
                             string uid = asm.ManifestModule.Name.Substring(0, asm.ManifestModule.Name.LastIndexOf('.'));
-                            uid += "." + obj.GetType().FullName;
+                            uid += "." + obj.ToType().FullName;
 
                             AppletData appletData = new AppletData();
                             appletData.AppletID = uid;
@@ -144,9 +144,7 @@ namespace PersonalDictionary
                element.Margin = padding;
                element.Click += delegate(object sender, EventArgs e) {
                    try
-                   {
-                       item.Run();
-                   }
+                   { item.Run(); }
                    catch (Exception ex)
                    { 
                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);

@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalDictionary", "Perso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryApplet", "DictionaryApplet\DictionaryApplet.csproj", "{C9E3DD7F-E102-4871-8BF1-7D1F169416FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalDictionary.Test", "PersonalDictionary.Test\PersonalDictionary.Test.csproj", "{A7DA5417-072C-4109-9A78-50F7CFACB963}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalDictionary.Test", "Tests\PersonalDictionary.Test\PersonalDictionary.Test.csproj", "{A7DA5417-072C-4109-9A78-50F7CFACB963}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C782EA31-0A3F-4FFE-B663-FDA3C6452F9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A7DA5417-072C-4109-9A78-50F7CFACB963} = {C782EA31-0A3F-4FFE-B663-FDA3C6452F9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60EC8886-D2BE-47F9-A98D-A4EE9DA63EF6}
