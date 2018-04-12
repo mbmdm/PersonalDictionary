@@ -114,7 +114,7 @@ namespace PersonalDictionary
                                   (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()));
 
             dataGrid.ItemsSource = view;
-            view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new TempConverter()));
+            view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new DateToDataGridConverter()));
 
             
 
@@ -144,37 +144,5 @@ namespace PersonalDictionary
         }
     }
 
-    class TempConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is DateTime)
-            {
-                string[] variants = { "Сегодня", "Вчера", "Месяц назад", "Год назад", "Давно" };
 
-                DateTime date = new DateTime(((DateTime)value).Year, ((DateTime)value).Month, ((DateTime)value).Day);
-                DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-                if (date == now)
-                    return variants[0];
-                else if ((now - date).Days == 1)
-                    return variants[1];
-                else if ((now - date).Days < 30)
-                    return variants[2];
-                else if ((now - date).Days < 362)
-                    return variants[3];
-                else if ((now - date).Days >= 362)
-                    return variants[4];
-
-                return "sort error";
-            }
-
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }

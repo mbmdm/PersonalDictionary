@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DateToDataGridConverter.cs" />
     <Compile Include="DicWindow.xaml.cs">
       <DependentUpon>DicWindow.xaml</DependentUpon>
     </Compile>

@@ -78,7 +78,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="Button_Click" Background="White" Foreground="White" Padding="0" BorderThickness="0">
-                                <Image Source="img/marker3.jpg" Height="23" Width="23" Margin="0"  />
+                                <Image Source="img/marker3.jpg" Height="23" Width="23" Margin="0" Name="off" />
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

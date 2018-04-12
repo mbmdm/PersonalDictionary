@@ -11,17 +11,17 @@ namespace PersonalDictionary.Test
     {
         static void Main(string[] args)
         {
-            test1();
+            /*test1();
             test2();
             test3();
             test4();
             test5();
-            test6();
-
+            test6();*/
+            test7();
             Console.Read();
         }
 
-        #region Tests
+        #region Tests DB
 
         /// <summary>Простое добавление слов</summary>
         static void test1()
@@ -246,6 +246,15 @@ namespace PersonalDictionary.Test
             if (!CompareFiles2("dic.xml", "test6_resoult.xml", out wrongIndex))
                 Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");
+        }
+
+        #endregion
+
+        #region Test Settings
+
+        static void test7()
+        {
+            Settings.Get();
         }
 
         #endregion
