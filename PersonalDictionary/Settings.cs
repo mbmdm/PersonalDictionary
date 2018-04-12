@@ -10,6 +10,7 @@ namespace PersonalDictionary
     public class Settings
     {
         Dictionary<string, string> keys;
+        const string path = "HKEY_CURRENT_USER\\Software\\mbm\\PersonalDictionar";
 
         #region Реализация SingleInstance / Конструктор / Деструктор
 
@@ -25,11 +26,11 @@ namespace PersonalDictionary
 
         private void Init()
         {
-            keys = new Dictionary<string, string>();
+            if (keys == null)
+                keys = new Dictionary<string, string>();
+            else keys.Clear();
 
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\mbm\\PersonalDictionar", true);
-
-            Registry.SetValue("HKEY_CURRENT_USER\\Software\\mbm\\PersonalDictionar", Guid.NewGuid().ToString(), DateTime.Now.ToLongTimeString());
 
             if (key == null)
                 return;
@@ -43,9 +44,12 @@ namespace PersonalDictionary
             });
         }
 
-        private void Commit()
+        public void Commit()
         {
-            throw new NotImplementedException();
+            keys.Keys.ToList().ForEach(delegate (string s)
+            {
+                Registry.SetValue(path, s, keys[s]);
+            });
         }
 
         public string this[string str]
@@ -58,7 +62,8 @@ namespace PersonalDictionary
             }
             set
             {
-                books[index] = value;
+                if (keys.Keys.Contains(str)) { keys[str] = value; }
+                else keys.Add(str, value);
             }
         }
     }

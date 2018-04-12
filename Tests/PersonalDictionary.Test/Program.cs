@@ -11,13 +11,13 @@ namespace PersonalDictionary.Test
     {
         static void Main(string[] args)
         {
-            /*test1();
+            test1();
             test2();
             test3();
             test4();
             test5();
-            test6();*/
-            test7();
+            test6();
+            //test7(); //Нет вывода результатов в консоль
             Console.Read();
         }
 
@@ -254,7 +254,10 @@ namespace PersonalDictionary.Test
 
         static void test7()
         {
-            Settings.Get();
+            var sets = Settings.Get();
+
+            sets["test123"] = "1111111";
+            sets["tset2"] = "test_key";
         }
 
         #endregion
