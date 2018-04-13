@@ -134,6 +134,7 @@ namespace PersonalDictionary
 
             XElement xe = new XElement("applet");
             xe.Add(new XAttribute("uid", applet.AppletID));
+            xe.Add(new XAttribute("display", applet.AppletDisplay));
             root.Add(xe);
             xdoc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
 
@@ -317,6 +318,7 @@ namespace PersonalDictionary
             {
                 XElement xe = new XElement("applet");
                 xe.Add(new XAttribute("uid", data.AppletID));
+                xe.Add(new XAttribute("display", data.AppletDisplay));
                 data.WordProgress.Keys.ToList().ForEach(delegate (Word w)
                 {
                     XElement temp = new XElement("appletdata");
@@ -423,6 +425,7 @@ namespace PersonalDictionary
                 AppletData app_info = new AppletData();
                 {
                     app_info.AppletID = e.Attribute("uid").Value.ToString();
+                    app_info.AppletDisplay = e.Attribute("display").Value.ToString();
                     app_info.WordProgress = new Dictionary<Word, int>();
 
                     foreach (var e_ in e.Elements())

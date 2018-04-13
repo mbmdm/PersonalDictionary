@@ -65,6 +65,7 @@ namespace PersonalDictionary
     public class AppletData
     {
         public string AppletID { get; internal set; }
+        public string AppletDisplay { get; internal set; }
         public Dictionary<Word, int> WordProgress { get; internal set; }
 
         internal AppletData() { WordProgress = new Dictionary<Word, int>();  }

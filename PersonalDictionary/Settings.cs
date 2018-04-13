@@ -9,6 +9,8 @@ namespace PersonalDictionary
 {
     public class Settings
     {
+        public static string Applets_to_calc_full_progress { get; private set; } = "Applets_to_calc_full_progress";
+
         Dictionary<string, string> keys;
         const string path = "HKEY_CURRENT_USER\\Software\\mbm\\PersonalDictionar";
 

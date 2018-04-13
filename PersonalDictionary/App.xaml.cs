@@ -109,13 +109,14 @@ namespace PersonalDictionary
                         applets.Add(obj.ToType().FullName, obj);
 
                         //Регистрация апплета в БД для сохранения результатов (прогресса)
-                        if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == obj.ToType().FullName).ToArray().Length == 0)
-                        {
-                            string uid = asm.ManifestModule.Name.Substring(0, asm.ManifestModule.Name.LastIndexOf('.'));
-                            uid += "." + obj.ToType().FullName;
+                        string applet_uid = asm.ManifestModule.Name.Substring(0, asm.ManifestModule.Name.LastIndexOf('.'));
+                        applet_uid += "." + obj.ToType().FullName;
 
+                        if (DB.GetInstance().ApplestsData.Where(app => app.AppletID == applet_uid).ToArray().Length == 0)
+                        {
                             AppletData appletData = new AppletData();
-                            appletData.AppletID = uid;
+                            appletData.AppletID = applet_uid;
+                            appletData.AppletDisplay = obj.DisplayName();
                             DB.GetInstance().RegisterApplet(appletData);
                         }
                     }
@@ -136,7 +137,7 @@ namespace PersonalDictionary
 
            foreach (var item in apps)
            {
-               System.Windows.Forms.ToolStripMenuItem element = new System.Windows.Forms.ToolStripMenuItem();
+                System.Windows.Forms.ToolStripMenuItem element = new System.Windows.Forms.ToolStripMenuItem();
 
                
                element.Text = item.DisplayName();

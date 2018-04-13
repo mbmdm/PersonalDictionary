@@ -24,22 +24,15 @@ namespace PersonalDictionary
     {
         public List<Word> Words { get; set; }
 
-        #region IApplet
-
         public DicWindow()
         {
             InitializeComponent();
             this.Closing += DicWindow_Closing;
             this.Loaded += MainWindow_Loaded;
-
             this.Words = DB.GetInstance().Words;
         }
 
-        void DicWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.Visibility = Visibility.Hidden;
-            e.Cancel = true;            
-        }
+        #region IApplet
 
         public void Run() 
         {
@@ -57,6 +50,14 @@ namespace PersonalDictionary
         public bool IsMainDialog() { return true; }
 
         #endregion
+
+        #region Events
+
+        void DicWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Visibility = Visibility.Hidden;
+            e.Cancel = true;
+        }
 
         private void add_word_Click(object sender, RoutedEventArgs e)
         {
@@ -141,6 +142,15 @@ namespace PersonalDictionary
                 (b.Content as Image).Source = new BitmapImage(uri);
                 (b.Content as Image).Name = "off";
             }
+        }
+
+        #endregion
+
+        private void SettingsFullWordProgressShow_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsFullWordProgress dialog = new SettingsFullWordProgress();
+            dialog.ShowDialog();
+            this.dataGrid.Items.Refresh();
         }
     }
 
