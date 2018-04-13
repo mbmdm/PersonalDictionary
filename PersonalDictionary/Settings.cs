@@ -7,6 +7,17 @@ using Microsoft.Win32;
 
 namespace PersonalDictionary
 {
+    /*
+    Место хранения все настроек - ветка реестра "HKEY_CURRENT_USER\\Software\\mbm\\PersonalDictionar"
+    
+    Основной метод работы с классом заключает в получении экземпляра класса методом Get(). 
+    Имя свойство и значение передается типом string посредством индексатора, например:
+    
+    var sets = Settings.Get();
+    sets["test"] = "tset_value"; //Если свойства "test" не существует, оно бдует создано.
+    sets["test"] = "new_value"; //Для свойства с именем "test" бдует изменено значение
+    sets.Commit(); //Применяет все изменения
+    */
     public class Settings
     {
         public static string Applets_to_calc_full_progress { get; private set; } = "Applets_to_calc_full_progress";
