@@ -2,6 +2,7 @@
 <library>
   <GlobalDictionary>
     <word id="1" en="Word1" ru="Слово1" date_add="2018-04-10T13:05:04" date_modified="13.04.2018 22:35:49" />
+	<word id="2" en="Word2" ru="Слово2" date_add="2018-04-10T13:05:04" date_modified="13.04.2018 22:35:49" />
     <word id="3" en="Word3" ru="Слово3" date_add="2018-04-10T13:05:04" date_modified="13.04.2018 22:35:49" />
     <word id="4" en="Word4" ru="Слово4" date_add="2018-04-10T13:05:04" date_modified="13.04.2018 22:35:49" />
   </GlobalDictionary>
