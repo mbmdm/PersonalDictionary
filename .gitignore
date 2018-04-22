@@ -39,3 +39,4 @@ DictionaryApplet/obj/Debug/DictionaryApplet.csproj.FileListAbsolute.txt
 DictionaryApplet/obj/Debug/DictionaryApplet.csproj.GenerateResource.cache
 DictionaryApplet/obj/Debug/DictionaryApplet.csprojResolveAssemblyReference.cache
 WordTranslation/obj/Debug/WordTranslation.csproj.FileListAbsolute.txt
+Debug/dic.xml
