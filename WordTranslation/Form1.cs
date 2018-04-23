@@ -27,7 +27,7 @@ namespace PersonalDictionary
 
         int counterWords, rightChoices, wrongChoices;
 
-        AppletData myApplet;
+        //AppletData myApplet;
 
         public Form1()
         {
@@ -46,28 +46,28 @@ namespace PersonalDictionary
             buttonsList.Add(button3);
             buttonsList.Add(button4);
 
-            GetAppletID();
+            //GetAppletID();
 
             NewTraining();
             
         }
 
-        private void GetAppletID()
-        {            
-            var applets = db.ApplestsData;
-            myApplet = null;
+        //private void GetAppletID()
+        //{            
+        //    var applets = db.ApplestsData;
+        //    myApplet = null;
 
-            foreach (var item in applets)
-            {
-                if (item.AppletID == "dictionary_applet.PersonalDictionary.WordTranslation")
-                {
-                    myApplet = item;
-                    break;
-                }
-            }
+        //    foreach (var item in applets)
+        //    {
+        //        if (item.AppletID == "dictionary_applet.PersonalDictionary.WordTranslation")
+        //        {
+        //            myApplet = item;
+        //            break;
+        //        }
+        //    }
 
-            if (myApplet == null) throw new Exception("AppletID not received");
-        }
+        //    if (myApplet == null) throw new Exception("AppletID not received");
+        //}
 
         private void NewTraining()
         {
@@ -142,23 +142,28 @@ namespace PersonalDictionary
         private void NoChoice()
         {
             wrongChoices++;
-            PushProgress(0);
+            //PushProgress(0);
             OffButtons();
         }
 
-        private void PushProgress(int progress)
-        {
-            AppletDataInfo info = new AppletDataInfo();
-            info.AppletData = myApplet;
-            info.Word = wordsList[indexWord];
-            info.Progress = progress;
+        //private void PushProgress(int progress)
+        //{
+        //    AppletDataInfo info = new AppletDataInfo();
+        //    info.AppletData = myApplet;
+        //    info.Word = wordsList[indexWord];
 
-            db.Push(info);
-        }
+        //    if (progress == 0)
+        //        info.Progress = progress;
+        //    else
+        //        info.Progress =  +progress;
+
+        //    db.Push(info);
+        //}
 
         private void WrongChoice(int numberButton)
         {
             wrongChoices++;
+            //PushProgress(0);
             label3.Text = "Неверно.";
             label3.ForeColor = System.Drawing.Color.Red;
             buttonsList[numberButton].BackColor = System.Drawing.Color.IndianRed;
@@ -169,6 +174,7 @@ namespace PersonalDictionary
         private void RightChoice(int numberButton)
         {
             rightChoices++;
+            //PushProgress(25);
             label3.Text = "Верно.";
             label3.ForeColor = System.Drawing.Color.DarkGreen;
         OffButtons();
