@@ -47,9 +47,17 @@ namespace PersonalDictionary
             buttonsList.Add(button4);
 
             //GetAppletID();
-
+            this.FormClosing += Form1_FormClosing;
+            
             NewTraining();
             
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            e.Cancel = true;
+            this.Hide();
         }
 
         //private void GetAppletID()
