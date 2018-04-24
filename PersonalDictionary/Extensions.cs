@@ -17,6 +17,9 @@ namespace PersonalDictionary
         {
             //Получаем список всех апплетов, данные из которых буду учитываться при анализе изученности слова
             string active_applets = Settings.Get()[Settings.Applets_to_calc_full_progress];
+
+            if (active_applets == null) return WordProgress.No;
+
             int count_active_applets = Settings.Get()[Settings.Applets_to_calc_full_progress].Split(new char[] { '#' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
 

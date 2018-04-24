@@ -29,6 +29,7 @@ namespace PersonalDictionary
             set
             {
                 Settings.Get()["PersonalDictionary.CurrentDictionaty"] = value.Name;
+                Settings.Get().Commit();
                 currentDictionaty = value;
             }
         }
