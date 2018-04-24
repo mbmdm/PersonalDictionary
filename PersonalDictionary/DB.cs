@@ -200,6 +200,8 @@ namespace PersonalDictionary
 
                 if (info.En != string.Empty)
                     info.Word.En = info.En;
+
+                info.Word.Modified = DateTime.Now;
             });
 
             #endregion
@@ -220,7 +222,7 @@ namespace PersonalDictionary
                 xe.Add(new XAttribute("en", w.En));
                 xe.Add(new XAttribute("ru", w.Ru));
                 xe.Add(new XAttribute("date_add", w.Add));
-                xe.Add(new XAttribute("date_modified", DateTime.Now.ToString()));
+                xe.Add(new XAttribute("date_modified", w.Modified));
                 root.Add(xe);
             });
 
