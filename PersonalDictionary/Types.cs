@@ -60,6 +60,11 @@ namespace PersonalDictionary
             Dictionary dic = (Dictionary)obj;
             return String.Compare(this.Name, dic.Name);
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class AppletData

@@ -44,6 +44,13 @@
                 <RibbonGroup Header="Настройка приложения"  VerticalAlignment="Stretch" >
                     <RibbonButton LargeImageSource="img\edit.png" Label="Учет результатов тренировок" Click="SettingsFullWordProgressShow_Click" />
                 </RibbonGroup>
+                <RibbonGroup Header="Активный словарь"  VerticalAlignment="Stretch" >
+                    <RibbonComboBox Label="Мой словарь" >
+                        <RibbonGallery x:Name="current_dic_cb" SelectionChanged="CurrentDictionaryChange_Click">
+                            <RibbonGalleryCategory ItemsSource="{Binding Path=Dictionaries}"/>
+                        </RibbonGallery>
+                    </RibbonComboBox>
+                </RibbonGroup>
             </RibbonTab>
         </Ribbon>
         <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Extended"  

@@ -22,7 +22,16 @@ namespace PersonalDictionary
 
         #region Поля
 
-        public Dictionary CurrentDictionaty { get; set; }
+        public Dictionary currentDictionaty;
+        public Dictionary CurrentDictionaty
+        {
+            get { return currentDictionaty; }
+            set
+            {
+                Settings.Get()["PersonalDictionary.CurrentDictionaty"] = value.Name;
+                currentDictionaty = value;
+            }
+        }
         public List<Word> Words { get; private set; }
         public List<Dictionary> Dictionaties { get; private set; }
         public List<AppletData> ApplestsData { get; private set; }
@@ -410,10 +419,18 @@ namespace PersonalDictionary
 
             Dictionaties.Sort();
 
+            string currentDic = Settings.Get()["PersonalDictionary.CurrentDictionaty"];
+
             if (this.CurrentDictionaty == null && this.Dictionaties.Count != 0)
                 CurrentDictionaty = Dictionaties[0];
             else if (this.CurrentDictionaty != null && !this.Dictionaties.Contains(CurrentDictionaty))
                 CurrentDictionaty = Dictionaties[0];
+
+            if (currentDic != null)
+            {
+                var findDic = Dictionaties.Where(d => d.Name == currentDic).ToArray();
+                if (findDic.Length == 1) CurrentDictionaty = findDic[0];
+            }
         }
 
         private void Init_Progress()

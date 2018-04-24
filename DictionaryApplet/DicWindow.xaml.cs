@@ -23,13 +23,19 @@ namespace PersonalDictionary
     public partial class DicWindow : Window, IApplet
     {
         public List<Word> Words { get; set; }
+        public List<Dictionary> Dictionaries { get; set; }
 
         public DicWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
             this.Closing += DicWindow_Closing;
             this.Loaded += MainWindow_Loaded;
             this.Words = DB.GetInstance().Words;
+            this.Dictionaries = DB.GetInstance().Dictionaties;
+            this.current_dic_cb.SelectedItem = DB.GetInstance().CurrentDictionaty;
+
+
         }
 
         #region IApplet
@@ -151,6 +157,13 @@ namespace PersonalDictionary
             SettingsFullWordProgress dialog = new SettingsFullWordProgress();
             dialog.ShowDialog();
             this.dataGrid.Items.Refresh();
+        }
+
+        private void CurrentDictionaryChange_Click(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            Dictionary dic = e.NewValue as Dictionary;
+            if (dic != null)
+                DB.GetInstance().CurrentDictionaty = dic;
         }
     }
 
