@@ -225,7 +225,7 @@ namespace PersonalDictionary
             DB.GetInstance().Commit()
 
 #error После всех DB.Commit() тут нужно обновлять привязки. в часности элемент "Мой словарь" ссылается на старый currentDictionary (хотя возможно коллекция по прежнему ссылается на новый). Надо проверять. А лучше сделать функцию которая после DB.Commit() все привязки обновит по всему диалогу (которые необходимо обовить)
-
+#error Использовать ObservableCollection для локального Dictionaries
             ActivateOnlyDictionaryWords_Click(this, null);
         }
 
