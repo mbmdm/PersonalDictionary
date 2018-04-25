@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Ribbon x:Name="RibbonWin" SelectedIndex="0" >
             <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu Visibility="Hidden"></RibbonApplicationMenu>
+                <RibbonApplicationMenu Visibility="Visible" MouseDoubleClick="RibbonApplicationMenu_MouseDoubleClick"> </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Главное" >
                 <RibbonGroup Header="" >
@@ -45,11 +45,22 @@
                     <RibbonButton LargeImageSource="img\edit.png" Label="Учет результатов тренировок" Click="SettingsFullWordProgressShow_Click" />
                 </RibbonGroup>
                 <RibbonGroup Header="Активный словарь"  VerticalAlignment="Stretch" >
-                    <RibbonComboBox Label="Мой словарь" >
-                        <RibbonGallery x:Name="current_dic_cb" SelectionChanged="CurrentDictionaryChange_Click">
-                            <RibbonGalleryCategory ItemsSource="{Binding Path=Dictionaries}"/>
-                        </RibbonGallery>
-                    </RibbonComboBox>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <RibbonComboBox Label="Мой словарь" Margin="0,10,0,0">
+                            <RibbonGallery x:Name="current_dic_cb" SelectionChanged="CurrentDictionaryChange_Click">
+                                <RibbonGalleryCategory ItemsSource="{Binding Path=Dictionaries}"/>
+                            </RibbonGallery>
+                        </RibbonComboBox>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,0">
+                            <RibbonCheckBox  x:Name="notShowDic_cb" Label="Не в словаре" Click="ActivateOnlyDictionaryWords_Click" HorizontalAlignment="Left"></RibbonCheckBox>
+                            <RibbonButton SmallImageSource="img\plus.png"  Click="add_word_to_dic_Click" Margin="5,0,20,0"/>
+                            <RibbonButton SmallImageSource="img\mines.png"  Click="del_word_from_dic_Click"/>
+                        </StackPanel>
+                    </Grid>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>

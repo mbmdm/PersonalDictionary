@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <library>
   <GlobalDictionary>
-    <word id="1" en="Word1" ru="Слово1" date_add="2018-04-10T13:05:04" date_modified="24.04.2018 23:15:38" />
-    <word id="2" en="Word2" ru="Слово2" date_add="2018-04-10T13:05:04" date_modified="24.04.2018 23:15:38" />
-    <word id="3" en="Word3" ru="Слово3" date_add="2018-04-10T13:05:04" date_modified="24.04.2018 23:15:38" />
-    <word id="4" en="Word4" ru="Слово4" date_add="2018-04-10T13:05:04" date_modified="24.04.2018 23:15:38" />
+    <word id="1" en="Word1" ru="Слово1" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
+    <word id="2" en="Word2" ru="Слово2" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
+    <word id="3" en="Word3" ru="Слово3" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
+    <word id="4" en="Word4" ru="Слово4" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
+    <word id="5" en="word5" ru="Слово5" date_add="2018-04-25T21:15:00" date_modified="2018-04-25T21:15:00" />
   </GlobalDictionary>
   <PersonalDictionaries>
-    <dictionary name="dic2_changed" descr="descr2_changed" words="#1#4" />
-    <dictionary name="dic3" descr="descr3" words="" />
-    <dictionary name="dic4" descr="descr4" words="#1#4#3" />
+    <dictionary name="dic2_changed" descr="descr2_changed" cost="false" words="#1#4#1#5#2#3" />
+    <dictionary name="dic3" descr="descr3" cost="false" words="#5#1#2#3" />
+    <dictionary name="dic4" descr="descr4" cost="false" words="" />
+    <dictionary name="Все" descr="Все доступные слова" cost="true" words="" />
   </PersonalDictionaries>
   <TraingProgressApplest>
     <applet uid="test1" display="test1">

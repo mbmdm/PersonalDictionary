@@ -22,7 +22,7 @@ namespace PersonalDictionary
 
         #region Поля
 
-        public Dictionary currentDictionaty;
+        private Dictionary currentDictionaty;
         public Dictionary CurrentDictionaty
         {
             get { return currentDictionaty; }
@@ -294,13 +294,20 @@ namespace PersonalDictionary
                 XElement xe = new XElement("dictionary");
                 xe.Add(new XAttribute("name", d.Name));
                 xe.Add(new XAttribute("descr", d.Description));
+                xe.Add(new XAttribute("cost", d.COST));
 
-                string words = string.Empty;
+                if (d.COST)
+                    xe.Add(new XAttribute("words", string.Empty));
 
-                d.Words.ForEach(delegate (Word w)
-                { words += "#" + w.ID; });
+                else
+                {
+                    string words = string.Empty;
 
-                xe.Add(new XAttribute("words", words));
+                    d.Words.ForEach(delegate (Word w)
+                    { words += "#" + w.ID; });
+
+                    xe.Add(new XAttribute("words", words));
+                }
 
                 root.Add(xe);
             });
@@ -374,6 +381,8 @@ namespace PersonalDictionary
             if (AppletsDataInfoDelete == null) AppletsDataInfoDelete = new List<AppletDataInfo>();
             else AppletsDataInfoDelete.Clear();
 
+            currentDictionaty = null;
+
             xdoc = XDocument.Load(Environment.CurrentDirectory + "\\" + xml_Name);
 
             Init_Word();
@@ -412,9 +421,16 @@ namespace PersonalDictionary
                 {
                     dic.Name = e.Attribute("name").Value.ToString();
                     dic.Description = e.Attribute("descr").Value.ToString();
-                    string[] ids = e.Attribute("words").Value.ToString().Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries);
-                    dic.Words = new List<Word>();
-                    dic.Words.AddRange(GetWord(ids));
+                    dic.COST = bool.Parse(e.Attribute("cost").Value.ToString());
+
+                    if (dic.COST) { dic.Words = this.Words; }
+
+                    else
+                    {
+                        string[] ids = e.Attribute("words").Value.ToString().Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries);
+                        dic.Words = new List<Word>();
+                        dic.Words.AddRange(GetWord(ids));
+                    }
                 };
 
                 Dictionaties.Add(dic);
@@ -424,16 +440,12 @@ namespace PersonalDictionary
 
             string currentDic = Settings.Get()["PersonalDictionary.CurrentDictionaty"];
 
-            if (this.CurrentDictionaty == null && this.Dictionaties.Count != 0)
-                CurrentDictionaty = Dictionaties[0];
-            else if (this.CurrentDictionaty != null && !this.Dictionaties.Contains(CurrentDictionaty))
-                CurrentDictionaty = Dictionaties[0];
-
             if (currentDic != null)
             {
                 var findDic = Dictionaties.Where(d => d.Name == currentDic).ToArray();
                 if (findDic.Length == 1) CurrentDictionaty = findDic[0];
             }
+            else CurrentDictionaty = Dictionaties[0];
         }
 
         private void Init_Progress()
