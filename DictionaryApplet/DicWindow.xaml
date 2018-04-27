@@ -31,15 +31,15 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Англ." Margin="0,0,5,0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" />
                             <TextBlock Text="Рус." Margin="0,0,5,0" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"  />
-                            <TextBox Text="" x:Name="en_tb" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="en_tb_TextChanged"/>
-                            <TextBox Text="" x:Name="ru_tb" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="en_tb_TextChanged" />
+                            <TextBox Text="" x:Name="en_tb" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="WordFilter_TextChanged"/>
+                            <TextBox Text="" x:Name="ru_tb" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="WordFilter_TextChanged" />
                             <!--<RibbonButton SmallImageSource="img\mines.png" Label="  Удалить слово"  Click="del_word_Click"/>-->
                         </Grid>
 
                     </StackPanel>
-                    <RibbonButton SmallImageSource="img\plus.png" Label="добавить" Click="add_word_Click" Margin="0,0,0,0"/>
-                    <RibbonButton SmallImageSource="img\mines.png" Label="удалить" Click="del_word_Click"/>
-                    <RibbonButton SmallImageSource="img\edit.png" Label="изменить" Click="edit_word_Click"/>
+                    <RibbonButton x:Name="plus_btn02"  SmallImageSource="img\plus.png" Label="добавить" Click="add_word_Click" Margin="0,0,0,0" IsEnabled="False"/>
+                    <RibbonButton x:Name="min_btn02" SmallImageSource="img\mines.png" Label="удалить" Click="del_word_Click" IsEnabled="False"/>
+                    <RibbonButton x:Name="edit_btn01" SmallImageSource="img\edit.png" Label="изменить" Click="edit_word_Click" IsEnabled="False"/>
                 </RibbonGroup>
                 <RibbonGroup Header="Настройка приложения"  VerticalAlignment="Stretch" >
                     <RibbonButton LargeImageSource="img\edit.png" Label="Учет результатов тренировок" Click="SettingsFullWordProgressShow_Click" />
@@ -56,9 +56,9 @@
                             </RibbonGallery>
                         </RibbonComboBox>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,0">
-                            <RibbonCheckBox  x:Name="notShowDic_cb" Label="Не в словаре" Click="ActivateOnlyDictionaryWords_Click" HorizontalAlignment="Left"></RibbonCheckBox>
-                            <RibbonButton SmallImageSource="img\plus.png"  Click="add_word_to_dic_Click" Margin="5,0,20,0"/>
-                            <RibbonButton SmallImageSource="img\mines.png"  Click="del_word_from_dic_Click"/>
+                            <RibbonCheckBox  x:Name="notShowDic_cb" Label="Не в словаре" Click="ActivateOnlyDictionaryWords_Click" HorizontalAlignment="Left" IsChecked="False"></RibbonCheckBox>
+                            <RibbonButton x:Name="plus_btn01" SmallImageSource="img\plus.png"  Click="add_word_to_dic_Click" Margin="5,0,20,0" IsEnabled="False"/>
+                            <RibbonButton x:Name="min_btn01" SmallImageSource="img\mines.png"  Click="del_word_from_dic_Click" IsEnabled="False"/>
                         </StackPanel>
                     </Grid>
                 </RibbonGroup>
@@ -66,7 +66,7 @@
         </Ribbon>
         <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Extended"  
                   SelectionUnit="FullRow" IsReadOnly="False" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                  VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Item"  >
+                  VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Item"  SelectedCellsChanged="DataGrid_SelectedChanged">
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>

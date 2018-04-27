@@ -26,17 +26,21 @@ namespace PersonalDictionary
         public ObservableCollection<Word> Words { get; set; }
         public ObservableCollection<Dictionary> Dictionaries { get; set; }
 
-        private Predicate<Word> defaulFilter;
-
         public DicWindow()
         {
             InitializeComponent();
             this.DataContext = this;
             this.Closing += DicWindow_Closing;
-            this.Loaded += MainWindow_Loaded;
             this.Words = new ObservableCollection<Word>();
             this.Dictionaries = new ObservableCollection<Dictionary>();
 
+            ICollectionView view = CollectionViewSource.GetDefaultView(this.Words);
+            view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new DateToDataGridConverter()));
+            view.SortDescriptions.Add(new SortDescription("Add", ListSortDirection.Descending));
+
+            dataGrid.ItemsSource = view;
+
+            ActivateOnlyDictionaryWords_Click(this, null);
             AfterDDUpdate();
         }
 
@@ -69,6 +73,28 @@ namespace PersonalDictionary
                 DB.GetInstance().CurrentDictionaty = dic;
                 ActivateOnlyDictionaryWords_Click(this, null);
             }
+
+            if (DB.GetInstance().CurrentDictionaty.COST)
+            {
+                this.plus_btn01.IsEnabled = false;
+                this.min_btn02.IsEnabled = false;
+                notShowDic_cb.IsEnabled = false;
+            }
+
+            else
+            {
+                notShowDic_cb.IsEnabled = true;
+                if (this.notShowDic_cb.IsChecked == true)
+                {
+                    this.plus_btn01.IsEnabled = true;
+                    this.min_btn02.IsEnabled = true;
+                }
+                else
+                {
+                    this.plus_btn01.IsEnabled = false;
+                    this.min_btn02.IsEnabled = false;
+                }
+            }
         }
 
         /// <summary>Показыват только слова выбранного словаря</summary>
@@ -87,12 +113,18 @@ namespace PersonalDictionary
                 view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
                                        (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
                                        targetWords.Contains(str as Word));
+
+                this.plus_btn01.IsEnabled = false;
+                this.min_btn02.IsEnabled = false;
             }
             else
             {                
                 view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
                                       (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
                                       !targetWords.Contains(str as Word));
+
+                this.plus_btn01.IsEnabled = true;
+                this.min_btn02.IsEnabled = true;
             }
 
             //(dataGrid.ItemsSource as ICollectionView).Refresh();
@@ -116,14 +148,17 @@ namespace PersonalDictionary
                 return;
             }
 
+            en_tb.Text = string.Empty;
+            ru_tb.Text = string.Empty;
+
             DB db = DB.GetInstance();
 
             DB.GetInstance().Push(info);
 
             DB.GetInstance().Commit();
 
-            //this.dataGrid.Items.Refresh();
-            (dataGrid.ItemsSource as ICollectionView).Refresh();
+            AfterDDUpdate();
+            
         }
 
         private void del_word_Click(object sender, RoutedEventArgs e)
@@ -137,36 +172,25 @@ namespace PersonalDictionary
 
             DB.GetInstance().Commit();
 
-            (dataGrid.ItemsSource as ICollectionView).Refresh();
+            AfterDDUpdate();
         }
 
         private void edit_word_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Не реализовано", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            string test = this.dataGrid.SelectedItems.Count.ToString();
+
+            MessageBox.Show("Не реализовано: " + test, "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        private void en_tb_TextChanged(object sender, TextChangedEventArgs e)
+        private void WordFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (dataGrid.ItemsSource is ICollectionView)
             {
                 (dataGrid.ItemsSource as ICollectionView).Refresh();
             }
-        }
 
-        void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            ICollectionView view = CollectionViewSource.GetDefaultView(DB.GetInstance().Words);
-            /*view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
-                                  (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()));
-
-            */dataGrid.ItemsSource = view;
-            view.GroupDescriptions.Add(new PropertyGroupDescription("Add", new DateToDataGridConverter()));
-
-            
-
-            view.SortDescriptions.Add(new SortDescription("Add", ListSortDirection.Descending));
-
-            ActivateOnlyDictionaryWords_Click(this, null);
+            if (this.en_tb.Text != string.Empty) this.plus_btn02.IsEnabled = true;
+            else this.plus_btn02.IsEnabled = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -204,6 +228,8 @@ namespace PersonalDictionary
             DB.GetInstance().Dictionaties.ForEach(d => this.Dictionaries.Add(d));
 
             this.current_dic_cb.SelectedItem = DB.GetInstance().CurrentDictionaty;
+
+            (this.dataGrid.ItemsSource as ICollectionView).Refresh();
         }
 
         #endregion
@@ -239,6 +265,8 @@ namespace PersonalDictionary
             DB.GetInstance().Push(dicinfo);
             DB.GetInstance().Commit();
 
+            AfterDDUpdate();
+
             //ActivateOnlyDictionaryWords_Click(this, null);
         }
 
@@ -270,6 +298,21 @@ namespace PersonalDictionary
         private void RibbonApplicationMenu_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void DataGrid_SelectedChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (this.dataGrid.SelectedItems.Count == 0)
+            {
+                this.min_btn02.IsEnabled = false;
+                this.edit_btn01.IsEnabled = false;
+            }
+
+            else
+            {
+                this.min_btn02.IsEnabled = true;
+                this.edit_btn01.IsEnabled = true;
+            }
         }
     }
 
