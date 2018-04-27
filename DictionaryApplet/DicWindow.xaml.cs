@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Globalization;
+using System.Collections.ObjectModel;
 
 namespace PersonalDictionary
 {
@@ -22,8 +23,8 @@ namespace PersonalDictionary
     /// </summary>
     public partial class DicWindow : Window, IApplet
     {
-        public List<Word> Words { get; set; }
-        public List<Dictionary> Dictionaries { get; set; }
+        public ObservableCollection<Word> Words { get; set; }
+        public ObservableCollection<Dictionary> Dictionaries { get; set; }
 
         private Predicate<Word> defaulFilter;
 
@@ -33,9 +34,10 @@ namespace PersonalDictionary
             this.DataContext = this;
             this.Closing += DicWindow_Closing;
             this.Loaded += MainWindow_Loaded;
-            this.Words = DB.GetInstance().Words;
-            this.Dictionaries = DB.GetInstance().Dictionaties;
-            this.current_dic_cb.SelectedItem = DB.GetInstance().CurrentDictionaty;
+            this.Words = new ObservableCollection<Word>();
+            this.Dictionaries = new ObservableCollection<Dictionary>();
+
+            AfterDDUpdate();
         }
 
         #region IApplet
@@ -80,6 +82,8 @@ namespace PersonalDictionary
 
             if (!notShowDic_cb.IsChecked == true)
             {
+                var test = view.SourceCollection;
+
                 view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
                                        (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
                                        targetWords.Contains(str as Word));
@@ -191,6 +195,17 @@ namespace PersonalDictionary
 
         #region Инкапсуляция
 
+        void AfterDDUpdate()
+        {
+            this.Words.Clear();
+            DB.GetInstance().Words.ForEach(w => this.Words.Add(w));
+
+            this.Dictionaries.Clear();
+            DB.GetInstance().Dictionaties.ForEach(d => this.Dictionaries.Add(d));
+
+            this.current_dic_cb.SelectedItem = DB.GetInstance().CurrentDictionaty;
+        }
+
         #endregion
 
         private void SettingsFullWordProgressShow_Click(object sender, RoutedEventArgs e)
@@ -222,11 +237,9 @@ namespace PersonalDictionary
             var test1 = DB.GetInstance().Words;
             var test2 = dataGrid.Items[0];
             DB.GetInstance().Push(dicinfo);
-            DB.GetInstance().Commit()
+            DB.GetInstance().Commit();
 
-#error После всех DB.Commit() тут нужно обновлять привязки. в часности элемент "Мой словарь" ссылается на старый currentDictionary (хотя возможно коллекция по прежнему ссылается на новый). Надо проверять. А лучше сделать функцию которая после DB.Commit() все привязки обновит по всему диалогу (которые необходимо обовить)
-#error Использовать ObservableCollection для локального Dictionaries
-            ActivateOnlyDictionaryWords_Click(this, null);
+            //ActivateOnlyDictionaryWords_Click(this, null);
         }
 
         /// <summary>Удаляет выбранное(ые) слово(а) из словаря</summary>
@@ -251,7 +264,7 @@ namespace PersonalDictionary
             DB.GetInstance().Push(dicinfo);
             DB.GetInstance().Commit();
 
-            ActivateOnlyDictionaryWords_Click(this, null);
+            AfterDDUpdate();
         }
 
         private void RibbonApplicationMenu_MouseDoubleClick(object sender, MouseButtonEventArgs e)
