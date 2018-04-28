@@ -44,6 +44,11 @@ namespace PersonalDictionary
         private List<AppletDataInfo> AppletsDataInfo { get; set; }
         private List<AppletDataInfo> AppletsDataInfoDelete { get; set; }
 
+        public delegate void DBSimpleHandler();
+
+        /// <summary>Происходит после выполнения DB.Commit()</summary>
+        public event DBSimpleHandler Updated;
+
         XDocument xdoc;
 
         #endregion
@@ -134,9 +139,9 @@ namespace PersonalDictionary
             doc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
 
             Init();
+            
+            if (Updated!= null) Updated();
         }
-
-        #endregion
 
         internal void RegisterApplet(AppletData applet)
         {
@@ -150,6 +155,10 @@ namespace PersonalDictionary
 
             Init();
         }
+
+        #endregion
+
+
 
         #region Инкапсуляция
 
@@ -180,19 +189,26 @@ namespace PersonalDictionary
             doc.Element(root_xml_name).Add(new XElement(xml_global_dictionary_name));
             var root = doc.Element(root_xml_name).Element(xml_global_dictionary_name);
 
-            #region Часть 0. Удаляем из существующих словарей слова, стоящие на удалении
+            #region Часть 1. Удаление слов из всех словарей и прогрессов
 
-            WordsInfoDelete.ForEach(delegate(WordInfo info)
+            WordsInfoDelete.ForEach(delegate (WordInfo info)
             {
-                Dictionaties.ForEach(delegate (Dictionary d)
+                Dictionaties.ForEach(delegate (Dictionary d) //Удаляем из всех словарей
                 {
-                    d.Words.Remove(info.Word);
+                    d.Words.Remove(info.Word); 
                 });
+
+                ApplestsData.ForEach(delegate (AppletData applet) //Из прогресса всех апплетов
+                {
+                    applet.WordProgress.Remove(info.Word);
+                });
+
+                Words.Remove(info.Word); // Из глобальной коллелкции (хотя словарь "все" ссылается на нее, так что как правило слово уже удалено)
             });
 
             #endregion
 
-            #region Часть 1. Вносятся изменения в существующие слова
+            #region Часть 2. Вносятся изменения в существующие слова
 
             WordsInfo.Where(i => (i.Word != null)).ToList().ForEach(delegate(WordInfo info)
             {
@@ -204,13 +220,6 @@ namespace PersonalDictionary
 
                 info.Word.Modified = DateTime.Now;
             });
-
-            #endregion
-
-            #region Часть 2. Удаляем слова
-
-            WordsInfoDelete.ForEach(delegate (WordInfo info)
-            { Words.Remove(info.Word); });
 
             #endregion
 

@@ -29,6 +29,7 @@ namespace PersonalDictionary
         public DicWindow()
         {
             InitializeComponent();
+            DB.GetInstance().Updated += OnDBUpdate;
             this.DataContext = this;
             this.Closing += DicWindow_Closing;
             this.Words = new ObservableCollection<Word>();
@@ -40,9 +41,11 @@ namespace PersonalDictionary
 
             dataGrid.ItemsSource = view;
 
-            ActivateOnlyDictionaryWords_Click(this, null);
-            AfterDDUpdate();
+            SetDataGridFilters();
+            OnDBUpdate();
+            UIComponentsEnableInit();
         }
+        ~DicWindow() { DB.GetInstance().Updated -= OnDBUpdate; }
 
         #region IApplet
 
@@ -65,78 +68,28 @@ namespace PersonalDictionary
 
         #region Events
 
+        /// <summary>После изменения выбора текущего словаря</summary>
         private void CurrentDictionaryChange_Click(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             Dictionary dic = e.NewValue as Dictionary;
-            if (dic != null)
-            {
-                DB.GetInstance().CurrentDictionaty = dic;
-                ActivateOnlyDictionaryWords_Click(this, null);
-            }
 
-            if (DB.GetInstance().CurrentDictionaty.COST)
-            {
-                this.plus_btn01.IsEnabled = false;
-                this.min_btn02.IsEnabled = false;
-                notShowDic_cb.IsEnabled = false;
-            }
+            if (dic == null) return;
 
-            else
-            {
-                notShowDic_cb.IsEnabled = true;
-                if (this.notShowDic_cb.IsChecked == true)
-                {
-                    this.plus_btn01.IsEnabled = true;
-                    this.min_btn02.IsEnabled = true;
-                }
-                else
-                {
-                    this.plus_btn01.IsEnabled = false;
-                    this.min_btn02.IsEnabled = false;
-                }
-            }
+            DB.GetInstance().CurrentDictionaty = dic;
+
+            SetDataGridFilters();
+            UIComponentsEnableInit();
         }
 
-        /// <summary>Показыват только слова выбранного словаря</summary>
-        private void ActivateOnlyDictionaryWords_Click(object sender, RoutedEventArgs e)
+        /// <summary>При вкл/выкл checkbox "Не в словаре"</summary>
+        private void ShowNotInDicWords_Click(object sender, RoutedEventArgs e)
         {
-            ICollectionView view = dataGrid.ItemsSource as ICollectionView;
-
-            if (view == null) return;
-
-            var targetWords = DB.GetInstance().CurrentDictionaty.Words;
-
-            if (!notShowDic_cb.IsChecked == true)
-            {
-                var test = view.SourceCollection;
-
-                view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
-                                       (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
-                                       targetWords.Contains(str as Word));
-
-                this.plus_btn01.IsEnabled = false;
-                this.min_btn02.IsEnabled = false;
-            }
-            else
-            {                
-                view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
-                                      (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
-                                      !targetWords.Contains(str as Word));
-
-                this.plus_btn01.IsEnabled = true;
-                this.min_btn02.IsEnabled = true;
-            }
-
-            //(dataGrid.ItemsSource as ICollectionView).Refresh();
+            SetDataGridFilters();
+            UIComponentsEnableInit();
         }
 
-        void DicWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.Visibility = Visibility.Hidden;
-            e.Cancel = true;
-        }
-
-        private void add_word_Click(object sender, RoutedEventArgs e)
+        /// <summary>Добавляет слово в БД</summary>
+        private void Add_word_Click(object sender, RoutedEventArgs e)
         {
             WordInfo info = new WordInfo();
             info.En = en_tb.Text.Trim();
@@ -155,13 +108,11 @@ namespace PersonalDictionary
 
             DB.GetInstance().Push(info);
 
-            DB.GetInstance().Commit();
-
-            AfterDDUpdate();
-            
+            DB.GetInstance().Commit();            
         }
 
-        private void del_word_Click(object sender, RoutedEventArgs e)
+        /// <summary>Удаляет слово из БД</summary>
+        private void Del_word_Click(object sender, RoutedEventArgs e)
         {
             foreach (var item in this.dataGrid.SelectedItems)
             {
@@ -171,29 +122,51 @@ namespace PersonalDictionary
             }
 
             DB.GetInstance().Commit();
-
-            AfterDDUpdate();
         }
 
-        private void edit_word_Click(object sender, RoutedEventArgs e)
+        /// <summary>Изменяет слово в БД</summary>
+        private void Edit_word_Click(object sender, RoutedEventArgs e)
         {
-            string test = this.dataGrid.SelectedItems.Count.ToString();
+            #region Выбрано одного слово в DataGrid
 
-            MessageBox.Show("Не реализовано: " + test, "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
-
-        private void WordFilter_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (dataGrid.ItemsSource is ICollectionView)
+            if (dataGrid.SelectedItems.Count == 1)
             {
-                (dataGrid.ItemsSource as ICollectionView).Refresh();
+                Word w = this.dataGrid.SelectedItem as Word;
+                if (w == null) return;
+
+                ChangeWordWindow dialog = new ChangeWordWindow();
+                dialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                dialog.Word = w;
+                dialog.ShowDialog();
+
+                var info = dialog.ChangedWordInfo;
+
+                if (dialog.Resoult == System.Windows.Forms.DialogResult.OK)
+                {
+                    DB.GetInstance().Push(info);
+                    DB.GetInstance().Commit();
+                }
             }
 
-            if (this.en_tb.Text != string.Empty) this.plus_btn02.IsEnabled = true;
-            else this.plus_btn02.IsEnabled = false;
+            #endregion
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>UI: при вводе текста в поля для англ. и рус. слов</summary>
+        private void WordFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (dataGrid.ItemsSource is ICollectionView) (dataGrid.ItemsSource as ICollectionView).Refresh();
+
+            UIComponentsEnableInit();
+        }
+
+        /// <summary>Предотвращает закрытие окна на прав. верхн. крест (происходит скрытие)</summary>
+        void DicWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Visibility = Visibility.Hidden;
+            e.Cancel = true;
+        }
+
+        private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(sender is Button))
                 return;
@@ -215,34 +188,18 @@ namespace PersonalDictionary
             }
         }
 
-        #endregion
-
-        #region Инкапсуляция
-
-        void AfterDDUpdate()
-        {
-            this.Words.Clear();
-            DB.GetInstance().Words.ForEach(w => this.Words.Add(w));
-
-            this.Dictionaries.Clear();
-            DB.GetInstance().Dictionaties.ForEach(d => this.Dictionaries.Add(d));
-
-            this.current_dic_cb.SelectedItem = DB.GetInstance().CurrentDictionaty;
-
-            (this.dataGrid.ItemsSource as ICollectionView).Refresh();
-        }
-
-        #endregion
-
-        private void SettingsFullWordProgressShow_Click(object sender, RoutedEventArgs e)
+        /// <summary>Показывает диалговое окно, в котором можно установить апрелы, прогресс слов в которых будет учитываться при расчете общего прогресса слова</summary>
+        private void CalcWordProgressSettingsDialog_Click(object sender, RoutedEventArgs e)
         {
             SettingsFullWordProgress dialog = new SettingsFullWordProgress();
+
             dialog.ShowDialog();
-            this.dataGrid.Items.Refresh();
+
+            if (dataGrid.ItemsSource is ICollectionView) (dataGrid.ItemsSource as ICollectionView).Refresh();
         }
 
         /// <summary>Добавляет выбранное(ые) слово(а) в словарь</summary>
-        private void add_word_to_dic_Click(object sender, RoutedEventArgs e)
+        private void Add_word_to_dic_Click(object sender, RoutedEventArgs e)
         {
             if (this.dataGrid.SelectedItems.Count == 0)
             {
@@ -257,21 +214,15 @@ namespace PersonalDictionary
             foreach (var item in this.dataGrid.SelectedItems)
             {
                 Word w = item as Word;
-                if (w!= null) dicinfo.WordsNew.Add(w);
+                if (w != null) dicinfo.WordsNew.Add(w);
             }
 
-            var test1 = DB.GetInstance().Words;
-            var test2 = dataGrid.Items[0];
             DB.GetInstance().Push(dicinfo);
             DB.GetInstance().Commit();
-
-            AfterDDUpdate();
-
-            //ActivateOnlyDictionaryWords_Click(this, null);
         }
 
         /// <summary>Удаляет выбранное(ые) слово(а) из словаря</summary>
-        private void del_word_from_dic_Click(object sender, RoutedEventArgs e)
+        private void Del_word_from_dic_Click(object sender, RoutedEventArgs e)
         {
             if (this.dataGrid.SelectedItems.Count == 0)
             {
@@ -291,29 +242,115 @@ namespace PersonalDictionary
 
             DB.GetInstance().Push(dicinfo);
             DB.GetInstance().Commit();
-
-            AfterDDUpdate();
         }
 
-        private void RibbonApplicationMenu_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        /// <summary>Завершает работу всего приложения</summary>
+        private void ShutDownAppication_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        /// <summary>Проиходит при изменении выбора в DataGrid</summary>
         private void DataGrid_SelectedChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (this.dataGrid.SelectedItems.Count == 0)
-            {
-                this.min_btn02.IsEnabled = false;
-                this.edit_btn01.IsEnabled = false;
-            }
+            UIComponentsEnableInit();
+        }
 
+        /// <summary>Двойной клик по элементу в DataGrid</summary>
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Edit_word_Click(this, null);
+        }
+
+        #endregion
+
+        #region Инкапсуляция
+
+        /// <summary>Перезаписывает все ObservableCollection коллекции. Выполнять после DB.Commit()</summary>
+        void OnDBUpdate()
+        {
+            this.Words.Clear();
+            DB.GetInstance().Words.ForEach(w => this.Words.Add(w));
+
+            this.Dictionaries.Clear();
+            DB.GetInstance().Dictionaties.ForEach(d => this.Dictionaries.Add(d));
+
+            this.current_dic_cb.SelectedItem = DB.GetInstance().CurrentDictionaty;
+
+            (this.dataGrid.ItemsSource as ICollectionView).Refresh();
+        }
+
+        /// <summary>Устанавливает фильтры для DataGrid, отображающего коллекцию слов</summary>
+        void SetDataGridFilters()
+        {
+            ICollectionView view = dataGrid.ItemsSource as ICollectionView;
+
+            if (view == null) return;
+
+            var targetWords = DB.GetInstance().CurrentDictionaty.Words;
+
+            if (!this.group3_DisplayNotDicWords_cb.IsChecked == true)
+            {
+                var test = view.SourceCollection;
+
+                view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
+                                       (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
+                                       targetWords.Contains(str as Word));
+            }
             else
             {
-                this.min_btn02.IsEnabled = true;
-                this.edit_btn01.IsEnabled = true;
+                view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
+                                      (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
+                                      !targetWords.Contains(str as Word));
             }
         }
+
+        /// <summary>Согласует свойства IsEnabled в различных элементов диалогового окна</summary>
+        void UIComponentsEnableInit()
+        {
+            //При вводе текста в поле для англ. слова
+            if (en_tb.Text != string.Empty) this.group1_plus_btn.IsEnabled = true;
+            else this.group1_plus_btn.IsEnabled = false;
+
+            //При выборе элементов в DataGrid
+            if (this.dataGrid.SelectedItems.Count == 0)
+            {
+                this.group1_min_btn.IsEnabled = false;
+                this.group1_edit_btn.IsEnabled = false;
+                this.group3_min_btn.IsEnabled = false;
+                this.group3_plus_btn.IsEnabled = false;
+            }
+            else
+            {
+                this.group1_min_btn.IsEnabled = true;
+                this.group1_edit_btn.IsEnabled = true;
+
+                if (this.group3_DisplayNotDicWords_cb.IsChecked == true) //Зависимость от вкл/выкл опции "Не в словаре"
+                {
+                    this.group3_plus_btn.IsEnabled = true;
+                    this.group3_min_btn.IsEnabled = false; 
+                }
+                else
+                {
+                    this.group3_plus_btn.IsEnabled = false;
+                    this.group3_min_btn.IsEnabled = true;
+                }
+            }
+
+            // Если словарь системный мы не можем не добавлять в него, не удалять
+            if (DB.GetInstance().CurrentDictionaty.COST)
+            {
+                this.group3_min_btn.IsEnabled = false;
+                this.group3_plus_btn.IsEnabled = false;
+                this.group3_DisplayNotDicWords_cb.IsEnabled = false;
+            }
+            else this.group3_DisplayNotDicWords_cb.IsEnabled = true;
+
+        }
+
+        #endregion
+
+
     }
 
 

@@ -8,7 +8,7 @@
     <word id="5" en="word5" ru="Слово5" date_add="2018-04-25T21:15:00" date_modified="2018-04-25T21:15:00" />
   </GlobalDictionary>
   <PersonalDictionaries>
-    <dictionary name="dic2_changed" descr="descr2_changed" cost="false" words="#1#4#1#5#2#3" />
+    <dictionary name="dic2_changed" descr="descr2_changed" cost="false" words="#1#2#3#5" />
     <dictionary name="dic3" descr="descr3" cost="false" words="#5#1#2#3" />
     <dictionary name="dic4" descr="descr4" cost="false" words="" />
     <dictionary name="Все" descr="Все доступные слова" cost="true" words="" />

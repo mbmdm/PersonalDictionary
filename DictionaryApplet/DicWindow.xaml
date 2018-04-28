@@ -15,7 +15,9 @@
         </Grid.RowDefinitions>
         <Ribbon x:Name="RibbonWin" SelectedIndex="0" >
             <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu Visibility="Visible" MouseDoubleClick="RibbonApplicationMenu_MouseDoubleClick"> </RibbonApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Header="Выход" ImageSource="img\exit.png" Click="ShutDownAppication_Click"/>
+                </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Главное" >
                 <RibbonGroup Header="" >
@@ -37,14 +39,11 @@
                         </Grid>
 
                     </StackPanel>
-                    <RibbonButton x:Name="plus_btn02"  SmallImageSource="img\plus.png" Label="добавить" Click="add_word_Click" Margin="0,0,0,0" IsEnabled="False"/>
-                    <RibbonButton x:Name="min_btn02" SmallImageSource="img\mines.png" Label="удалить" Click="del_word_Click" IsEnabled="False"/>
-                    <RibbonButton x:Name="edit_btn01" SmallImageSource="img\edit.png" Label="изменить" Click="edit_word_Click" IsEnabled="False"/>
+                    <RibbonButton x:Name="group1_plus_btn"  SmallImageSource="img\plus.png" Label="добавить" Click="Add_word_Click" Margin="0,0,0,0" ToolTip="Добавляет слово в глобальный словарь"/>
+                    <RibbonButton x:Name="group1_min_btn" SmallImageSource="img\mines.png" Label="удалить" Click="Del_word_Click" ToolTip="Удаляет слово из всех словарей"/>
+                    <RibbonButton x:Name="group1_edit_btn" SmallImageSource="img\edit.png" Label="изменить" Click="Edit_word_Click" ToolTip="Изменяет выборанное слово" />
                 </RibbonGroup>
-                <RibbonGroup Header="Настройка приложения"  VerticalAlignment="Stretch" >
-                    <RibbonButton LargeImageSource="img\edit.png" Label="Учет результатов тренировок" Click="SettingsFullWordProgressShow_Click" />
-                </RibbonGroup>
-                <RibbonGroup Header="Активный словарь"  VerticalAlignment="Stretch" >
+                <RibbonGroup  VerticalAlignment="Stretch" >
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -56,17 +55,22 @@
                             </RibbonGallery>
                         </RibbonComboBox>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,0">
-                            <RibbonCheckBox  x:Name="notShowDic_cb" Label="Не в словаре" Click="ActivateOnlyDictionaryWords_Click" HorizontalAlignment="Left" IsChecked="False"></RibbonCheckBox>
-                            <RibbonButton x:Name="plus_btn01" SmallImageSource="img\plus.png"  Click="add_word_to_dic_Click" Margin="5,0,20,0" IsEnabled="False"/>
-                            <RibbonButton x:Name="min_btn01" SmallImageSource="img\mines.png"  Click="del_word_from_dic_Click" IsEnabled="False"/>
+                            <RibbonCheckBox  x:Name="group3_DisplayNotDicWords_cb" Label="Не в словаре" Click="ShowNotInDicWords_Click" HorizontalAlignment="Left" ToolTip="Отображает слова, не входящие в текущий словарь"></RibbonCheckBox>
+                            <RibbonButton x:Name="group3_plus_btn" SmallImageSource="img\plus.png"  Click="Add_word_to_dic_Click" Margin="5,0,20,0" ToolTip="Включает выбранные слова в текущий словарь" />
+                            <RibbonButton x:Name="group3_min_btn" SmallImageSource="img\mines.png"  Click="Del_word_from_dic_Click" ToolTip="Удаляет выбранные слова из текущего словаря"/>
                         </StackPanel>
                     </Grid>
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab Header="Настройки">
+                <RibbonGroup  VerticalAlignment="Stretch" HorizontalContentAlignment="Center">
+                    <RibbonButton LargeImageSource="img\edit.png" Label="Расчет прогресса" Click="CalcWordProgressSettingsDialog_Click" />
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
         <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Extended"  
                   SelectionUnit="FullRow" IsReadOnly="False" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                  VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Item"  SelectedCellsChanged="DataGrid_SelectedChanged">
+                  VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Item"  SelectedCellsChanged="DataGrid_SelectedChanged" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
@@ -98,15 +102,24 @@
                 <!--<DataGridTextColumn Header="Добавлено" Binding="{Binding Add}" Width="200" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Изменено" Binding="{Binding Modified}" Width="200" IsReadOnly="False"/>-->
                 <DataGridTextColumn Header="Прогресс" Binding="{Binding Converter={StaticResource class1}}" IsReadOnly="True" />
-                <DataGridTemplateColumn Header="Тест">
+                <!--<DataGridTemplateColumn Header="Прогресс">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="Button_Click" Background="White" Foreground="White" Padding="0" BorderThickness="0">
-                                <Image Source="img/marker3.jpg" Height="23" Width="23" Margin="0" Name="off" />
+                            <Button Click="TestButton_Click" Background="White" Foreground="White" Padding="0" BorderThickness="0">
+                                <Image Source="img/progress_no.png" Height="24" Width="24" Margin="0" Name="off" />
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
+                <!--<DataGridTemplateColumn Header="Тест">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="TestButton_Click" Background="White" Foreground="White" Padding="0" BorderThickness="0" MouseEnter="Button_MouseEnter" MouseDown="Button_MouseDown" MouseLeave="Button_MouseLeave">
+                                <Image Source="img/marker3.jpg" Height="23" Width="23" Margin="0" Name="off"  />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

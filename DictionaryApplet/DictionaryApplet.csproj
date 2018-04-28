@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -75,6 +76,9 @@
     <Compile Include="SettingsFullWordProgress.xaml.cs">
       <DependentUpon>SettingsFullWordProgress.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChangeWordWindow.xaml.cs">
+      <DependentUpon>ChangeWordWindow.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -91,6 +95,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SettingsFullWordProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChangeWordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,6 +128,9 @@
     <Resource Include="img\marker1.jpg" />
     <Resource Include="img\marker2.jpg" />
     <Resource Include="img\marker3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\exit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
