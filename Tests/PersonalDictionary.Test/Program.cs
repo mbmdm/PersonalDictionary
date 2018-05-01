@@ -17,11 +17,11 @@ namespace PersonalDictionary.Test
             test4();
             test5();
             test6();
-
+            //test7(); //Нет вывода результатов в консоль
             Console.Read();
         }
 
-        #region Tests
+        #region Tests DB
 
         /// <summary>Простое добавление слов</summary>
         static void test1()
@@ -246,6 +246,18 @@ namespace PersonalDictionary.Test
             if (!CompareFiles2("dic.xml", "test6_resoult.xml", out wrongIndex))
                 Console.WriteLine("false (line " + wrongIndex + ")");
             else Console.WriteLine("true");
+        }
+
+        #endregion
+
+        #region Test Settings
+
+        static void test7()
+        {
+            var sets = Settings.Get();
+
+            sets["test123"] = "1111111";
+            sets["tset2"] = "test_key";
         }
 
         #endregion

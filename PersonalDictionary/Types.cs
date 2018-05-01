@@ -16,9 +16,11 @@ namespace PersonalDictionary
         public string Test { get; set; }
         static Random r;
 
+        public DateTime TestTime { get; set; }
+
         static Word() { r = new Random(); }
 
-        internal Word() { Test = "test_" + (Word.r.Next(0,10)%2).ToString(); }
+        internal Word() { Test = "test_" + (Word.r.Next(0,10)%2).ToString(); TestTime = DateTime.Now; }
 
         public int CompareTo(object obj)
         {
@@ -52,19 +54,27 @@ namespace PersonalDictionary
         public string Name { get; internal set; }
         public string Description { get; internal set; }
         public List<Word> Words { get; internal set; }
+        public bool COST { get; internal set; }
+        public DateTime TestTime { get; set; }
 
-        internal Dictionary() { Words = new List<Word>(); }
+        internal Dictionary() { Words = new List<Word>();  TestTime = DateTime.Now; }
 
         public int CompareTo(object obj)
         {
             Dictionary dic = (Dictionary)obj;
             return String.Compare(this.Name, dic.Name);
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class AppletData
     {
         public string AppletID { get; internal set; }
+        public string AppletDisplay { get; internal set; }
         public Dictionary<Word, int> WordProgress { get; internal set; }
 
         internal AppletData() { WordProgress = new Dictionary<Word, int>();  }

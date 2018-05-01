@@ -22,7 +22,17 @@ namespace PersonalDictionary
 
         #region Поля
 
-        public Dictionary CurrentDictionaty { get; set; }
+        private Dictionary currentDictionaty;
+        public Dictionary CurrentDictionaty
+        {
+            get { return currentDictionaty; }
+            set
+            {
+                Settings.Get()["PersonalDictionary.CurrentDictionaty"] = value.Name;
+                Settings.Get().Commit();
+                currentDictionaty = value;
+            }
+        }
         public List<Word> Words { get; private set; }
         public List<Dictionary> Dictionaties { get; private set; }
         public List<AppletData> ApplestsData { get; private set; }
@@ -33,6 +43,11 @@ namespace PersonalDictionary
         private List<DictionaryInfo> DictionariesInfoDelete { get; set; } //Коллекция словарей на удаление
         private List<AppletDataInfo> AppletsDataInfo { get; set; }
         private List<AppletDataInfo> AppletsDataInfoDelete { get; set; }
+
+        public delegate void DBSimpleHandler();
+
+        /// <summary>Происходит после выполнения DB.Commit()</summary>
+        public event DBSimpleHandler Updated;
 
         XDocument xdoc;
 
@@ -109,6 +124,18 @@ namespace PersonalDictionary
                 this.Delete(item);
         }
 
+        /// <summary>Полностью удаляет данные о результатах тренировки слова из апплетов</summary>
+        /// <param name="info">Если AppletData == null, то удаляются результаты из всех апплетов. Word не должен быть null. Progress не учитывается</param>
+        public void Delete(AppletDataInfo info)
+        {
+            if (info.Word == null) return;
+
+            if (info.AppletData != null)
+                info.AppletData.WordProgress.Remove(info.Word);
+            else
+                this.ApplestsData.ForEach(app => app.WordProgress.Remove(info.Word));
+        }
+
         /// <summary>Применяет все накопленные изменения, перезаписывает файл данных, обновляет все свойства объекта DB</summary>
         public void Commit()
         {
@@ -124,9 +151,9 @@ namespace PersonalDictionary
             doc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
 
             Init();
+            
+            if (Updated!= null) Updated();
         }
-
-        #endregion
 
         internal void RegisterApplet(AppletData applet)
         {
@@ -134,11 +161,14 @@ namespace PersonalDictionary
 
             XElement xe = new XElement("applet");
             xe.Add(new XAttribute("uid", applet.AppletID));
+            xe.Add(new XAttribute("display", applet.AppletDisplay));
             root.Add(xe);
             xdoc.Save(Environment.CurrentDirectory + "\\" + xml_Name);
 
             Init();
         }
+
+        #endregion
 
         #region Инкапсуляция
 
@@ -169,19 +199,26 @@ namespace PersonalDictionary
             doc.Element(root_xml_name).Add(new XElement(xml_global_dictionary_name));
             var root = doc.Element(root_xml_name).Element(xml_global_dictionary_name);
 
-            #region Часть 0. Удаляем из существующих словарей слова, стоящие на удалении
+            #region Часть 1. Удаление слов из всех словарей и прогрессов
 
-            WordsInfoDelete.ForEach(delegate(WordInfo info)
+            WordsInfoDelete.ForEach(delegate (WordInfo info)
             {
-                Dictionaties.ForEach(delegate (Dictionary d)
+                Dictionaties.ForEach(delegate (Dictionary d) //Удаляем из всех словарей
                 {
-                    d.Words.Remove(info.Word);
+                    d.Words.Remove(info.Word); 
                 });
+
+                ApplestsData.ForEach(delegate (AppletData applet) //Из прогресса всех апплетов
+                {
+                    applet.WordProgress.Remove(info.Word);
+                });
+
+                Words.Remove(info.Word); // Из глобальной коллелкции (хотя словарь "все" ссылается на нее, так что как правило слово уже удалено)
             });
 
             #endregion
 
-            #region Часть 1. Вносятся изменения в существующие слова
+            #region Часть 2. Вносятся изменения в существующие слова
 
             WordsInfo.Where(i => (i.Word != null)).ToList().ForEach(delegate(WordInfo info)
             {
@@ -190,14 +227,9 @@ namespace PersonalDictionary
 
                 if (info.En != string.Empty)
                     info.Word.En = info.En;
+
+                info.Word.Modified = DateTime.Now;
             });
-
-            #endregion
-
-            #region Часть 2. Удаляем слова
-
-            WordsInfoDelete.ForEach(delegate (WordInfo info)
-            { Words.Remove(info.Word); });
 
             #endregion
 
@@ -210,7 +242,7 @@ namespace PersonalDictionary
                 xe.Add(new XAttribute("en", w.En));
                 xe.Add(new XAttribute("ru", w.Ru));
                 xe.Add(new XAttribute("date_add", w.Add));
-                xe.Add(new XAttribute("date_modified", DateTime.Now.ToString()));
+                xe.Add(new XAttribute("date_modified", w.Modified));
                 root.Add(xe);
             });
 
@@ -241,7 +273,7 @@ namespace PersonalDictionary
             doc.Element(root_xml_name).Add(new XElement(xml_personal_dictionaries_name));
             var root = doc.Element(root_xml_name).Element(xml_personal_dictionaries_name);
 
-            #region Часть 1. Вносятся изменения в существующие словари
+            #region Часть 1. Вносятся изменения в существующие словари и создаются новые
 
             DictionariesInfo.Where(i => (i.Dictionary != null)).ToList().ForEach(delegate (DictionaryInfo info)
             {
@@ -265,6 +297,15 @@ namespace PersonalDictionary
                 }
             });
 
+            DictionariesInfo.Where(i => (i.Dictionary == null)).ToList().ForEach(delegate (DictionaryInfo info)
+            {
+                Dictionary dic = new Dictionary();
+                dic.Name = info.Name;
+                dic.Description = info.Description;
+
+                this.Dictionaties.Add(dic);
+            });
+
             #endregion
 
             #region Часть 2. Удаляем словари
@@ -281,13 +322,20 @@ namespace PersonalDictionary
                 XElement xe = new XElement("dictionary");
                 xe.Add(new XAttribute("name", d.Name));
                 xe.Add(new XAttribute("descr", d.Description));
+                xe.Add(new XAttribute("cost", d.COST));
 
-                string words = string.Empty;
+                if (d.COST)
+                    xe.Add(new XAttribute("words", string.Empty));
 
-                d.Words.ForEach(delegate (Word w)
-                { words += "#" + w.ID; });
+                else
+                {
+                    string words = string.Empty;
 
-                xe.Add(new XAttribute("words", words));
+                    d.Words.ForEach(delegate (Word w)
+                    { words += "#" + w.ID; });
+
+                    xe.Add(new XAttribute("words", words));
+                }
 
                 root.Add(xe);
             });
@@ -317,6 +365,7 @@ namespace PersonalDictionary
             {
                 XElement xe = new XElement("applet");
                 xe.Add(new XAttribute("uid", data.AppletID));
+                xe.Add(new XAttribute("display", data.AppletDisplay));
                 data.WordProgress.Keys.ToList().ForEach(delegate (Word w)
                 {
                     XElement temp = new XElement("appletdata");
@@ -360,6 +409,8 @@ namespace PersonalDictionary
             if (AppletsDataInfoDelete == null) AppletsDataInfoDelete = new List<AppletDataInfo>();
             else AppletsDataInfoDelete.Clear();
 
+            currentDictionaty = null;
+
             xdoc = XDocument.Load(Environment.CurrentDirectory + "\\" + xml_Name);
 
             Init_Word();
@@ -398,9 +449,16 @@ namespace PersonalDictionary
                 {
                     dic.Name = e.Attribute("name").Value.ToString();
                     dic.Description = e.Attribute("descr").Value.ToString();
-                    string[] ids = e.Attribute("words").Value.ToString().Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries);
-                    dic.Words = new List<Word>();
-                    dic.Words.AddRange(GetWord(ids));
+                    dic.COST = bool.Parse(e.Attribute("cost").Value.ToString());
+
+                    if (dic.COST) { dic.Words = this.Words; }
+
+                    else
+                    {
+                        string[] ids = e.Attribute("words").Value.ToString().Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries);
+                        dic.Words = new List<Word>();
+                        dic.Words.AddRange(GetWord(ids));
+                    }
                 };
 
                 Dictionaties.Add(dic);
@@ -408,10 +466,18 @@ namespace PersonalDictionary
 
             Dictionaties.Sort();
 
-            if (this.CurrentDictionaty == null && this.Dictionaties.Count != 0)
-                CurrentDictionaty = Dictionaties[0];
-            else if (this.CurrentDictionaty != null && !this.Dictionaties.Contains(CurrentDictionaty))
-                CurrentDictionaty = Dictionaties[0];
+            string currentDic = Settings.Get()["PersonalDictionary.CurrentDictionaty"];
+
+            if (currentDic != null)
+            {
+                var findDic = Dictionaties.Where(d => d.Name == currentDic).ToArray();
+                if (findDic.Length == 1) CurrentDictionaty = findDic[0];
+                else if (Dictionaties.Where(d => d.COST).ToArray().Length > 0)
+                    CurrentDictionaty = Dictionaties.Where(d => d.COST).ToArray()[0];
+                else
+                    throw new Exception("Не найден словарь по умолчанию, системный словарь не обнаружен.");
+            }
+            else CurrentDictionaty = Dictionaties[0];
         }
 
         private void Init_Progress()
@@ -423,6 +489,7 @@ namespace PersonalDictionary
                 AppletData app_info = new AppletData();
                 {
                     app_info.AppletID = e.Attribute("uid").Value.ToString();
+                    app_info.AppletDisplay = e.Attribute("display").Value.ToString();
                     app_info.WordProgress = new Dictionary<Word, int>();
 
                     foreach (var e_ in e.Elements())

@@ -1,0 +1,32 @@
+﻿<Window x:Class="PersonalDictionary.SettingsFullWordProgress"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Настройка" SizeToContent="Height" Width="400"
+        FontSize="14">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <WrapPanel >
+            <TextBlock TextWrapping="Wrap" Text="Выберите треннажеры, которые будут учитываться при расчете итогового прогресса каждого слова в словаре" FontStyle="Italic" />
+        </WrapPanel>
+        <Grid Margin="5,20" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Name="panel1" Margin="0,0,10,0">
+            </StackPanel>
+            <StackPanel Name="panel2" Grid.Column="1" Margin="10,0,0,0"></StackPanel>
+        </Grid>
+        <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
+            <Button Width="100" Margin="0,0,10,0" Click="Ok_btn_Click">Применить</Button>
+            <Button Width="70" Click="Cancel_btn_Click">Отмена</Button>
+        </StackPanel>
+    </Grid>
+</Window>
