@@ -5,7 +5,7 @@
         xmlns:l="clr-namespace:TestNameSpace"
         xmlns:s="clr-namespace:System;assembly=mscorlib"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="PersonalDictionary.DicWindow"
-        Title="Словарь" Height="600" Width="867.333">
+        Title="Словарь" Height="600" Width="900">
     <Window.Resources>
         <l:Class1 x:Key="class1"/>
     </Window.Resources>
@@ -20,7 +20,7 @@
                     <RibbonApplicationMenuItem Header="Выход" ImageSource="img\exit.png" Click="ShutDownAppication_Click"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Header="Главное" d:IsHidden="True" >
+            <RibbonTab Header="Главное" >
                 <RibbonGroup Header="" >
                     <StackPanel Orientation="Horizontal" Margin="0,10,10,0">
                         <Grid Width="300">
@@ -63,16 +63,17 @@
                     </Grid>
                 </RibbonGroup>
                 <RibbonGroup >
-                    <RibbonControlGroup x:Name="group4_ribbonFiltersGroup" Margin="0,25,0,0" FontSize="14" Height="35" >
-                        <RibbonControlGroup.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </RibbonControlGroup.ItemsPanel>
-                        <RibbonToggleButton x:Name="group4_words_btn" Label="Слова" Width="60" Click="WordFilter_Click"/>
-                        <RibbonToggleButton x:Name="group4_phrases_btn" Label="Фразы" Width="60" Click="WordFilter_Click"/>
-                        <RibbonToggleButton x:Name="group4_sentences_btn" Label="Предл." Width="60" Click="WordFilter_Click"/>
-                    </RibbonControlGroup>
+                    <StackPanel Name="group4_ribbonFiltersGroup1" Orientation="Horizontal" Height="30" Margin="0,6,0,0">
+                        <RibbonToggleButton x:Name="group4_words_btn" Label="Слова" Width="80" Click="WordFilter_Click"/>
+                        <RibbonToggleButton x:Name="group4_phrases_btn" Label="Фразы" Width="80" Click="WordFilter_Click"/>
+                        <RibbonToggleButton x:Name="group4_sentences_btn" Label="Предл." Width="80" Click="WordFilter_Click"/>
+
+                    </StackPanel>
+                    <StackPanel  Name="group4_ribbonFiltersGroup2" Orientation="Horizontal" Height="30">
+                        <RibbonToggleButton x:Name="group4_NotLearned_btn" Label="Не изучено" Width="80" Click="WordFilter_Click"/>
+                        <RibbonToggleButton x:Name="group4_OnLearn_btn" Label="На изучении" Width="80" Click="WordFilter_Click"/>
+                        <RibbonToggleButton x:Name="group4_Learned_btn" Label="Изучено" Width="80" Click="WordFilter_Click"/>
+                    </StackPanel>
                 </RibbonGroup>
             </RibbonTab>
             <RibbonTab Header="Настройки">
@@ -101,7 +102,19 @@
         </Ribbon>
         <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Extended"  
                   SelectionUnit="FullRow" IsReadOnly="False" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                  VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Item"  SelectedCellsChanged="DataGrid_SelectedChanged" MouseDoubleClick="DataGrid_MouseDoubleClick">
+                  VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Item"  SelectedCellsChanged="DataGrid_SelectedChanged" >
+            <DataGrid.Resources>
+                <ContextMenu x:Key="ticketContextMenu">
+                    <ContextMenu.Items>
+                        <MenuItem Header="Сбросить прогресс слова" CommandParameter="{Binding DataContext.TicketNumber, RelativeSource={RelativeSource Mode=Self}}" Click="DropWordProgress_Click"/>
+                    </ContextMenu.Items>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                    <Setter Property="ContextMenu" Value="{StaticResource ticketContextMenu}" />
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>

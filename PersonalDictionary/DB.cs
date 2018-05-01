@@ -124,6 +124,18 @@ namespace PersonalDictionary
                 this.Delete(item);
         }
 
+        /// <summary>Полностью удаляет данные о результатах тренировки слова из апплетов</summary>
+        /// <param name="info">Если AppletData == null, то удаляются результаты из всех апплетов. Word не должен быть null. Progress не учитывается</param>
+        public void Delete(AppletDataInfo info)
+        {
+            if (info.Word == null) return;
+
+            if (info.AppletData != null)
+                info.AppletData.WordProgress.Remove(info.Word);
+            else
+                this.ApplestsData.ForEach(app => app.WordProgress.Remove(info.Word));
+        }
+
         /// <summary>Применяет все накопленные изменения, перезаписывает файл данных, обновляет все свойства объекта DB</summary>
         public void Commit()
         {
@@ -157,8 +169,6 @@ namespace PersonalDictionary
         }
 
         #endregion
-
-
 
         #region Инкапсуляция
 
@@ -462,6 +472,10 @@ namespace PersonalDictionary
             {
                 var findDic = Dictionaties.Where(d => d.Name == currentDic).ToArray();
                 if (findDic.Length == 1) CurrentDictionaty = findDic[0];
+                else if (Dictionaties.Where(d => d.COST).ToArray().Length > 0)
+                    CurrentDictionaty = Dictionaties.Where(d => d.COST).ToArray()[0];
+                else
+                    throw new Exception("Не найден словарь по умолчанию, системный словарь не обнаружен.");
             }
             else CurrentDictionaty = Dictionaties[0];
         }

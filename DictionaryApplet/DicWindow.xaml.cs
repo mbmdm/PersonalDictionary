@@ -68,13 +68,75 @@ namespace PersonalDictionary
 
         #region Events
 
+        /// <summary>Сбрасывает прогресс слова во всех тренажерах</summary>
+        private void DropWordProgress_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult resoult = MessageBoxResult.Cancel;
+
+            if (this.dataGrid.SelectedItems.Count > 1)
+                resoult = MessageBox.Show("Будет сброшен прогресс " + this.dataGrid.SelectedItems.Count + " слов", "Информация", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            else if (this.dataGrid.SelectedItems.Count == 1)
+                resoult = MessageBox.Show("Будет сброшен прогресс слова \"" + (this.dataGrid.SelectedItem as Word).En + "\"" , "Информация", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+
+            if (resoult != MessageBoxResult.OK) return;
+
+            foreach (var item in this.dataGrid.SelectedItems)
+                DB.GetInstance().Delete(new AppletDataInfo() { Word = item as Word });
+
+            DB.GetInstance().Commit();
+        }
+
+        /// <summary>Создает новый словарь</summary>
+        private void Add_dictionary_Click(object sender, RoutedEventArgs e)
+        {
+            CreateEditDictionaryWindow dialog = new CreateEditDictionaryWindow();
+            dialog.ShowDialog();
+
+            if (dialog.Resoult != System.Windows.Forms.DialogResult.OK) return;
+            DB.GetInstance().Push(dialog.DictionaryInfo);
+            DB.GetInstance().Commit();
+        }
+
+        /// <summary>Удаляет выбранный словарь</summary>
+        private void Del_dictionary_Click(object sender, RoutedEventArgs e)
+        {
+            DictionaryInfo info;
+            info.Dictionary = this.group5_SelectedDic.SelectedItem as Dictionary;
+
+            if (info.Dictionary == DB.GetInstance().CurrentDictionaty || info.Dictionary.COST)
+            {
+                MessageBox.Show("Невозможно удалить выбранный и системный словарь", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            DB.GetInstance().Delete(info);
+            DB.GetInstance().Commit();
+        }
+
+        /// <summary>Изменяет выбранный словарь</summary>
+        private void Edit_dictionary_Click(object sender, RoutedEventArgs e)
+        {
+            CreateEditDictionaryWindow dialog = new CreateEditDictionaryWindow();
+            dialog.Dictionary = this.group5_SelectedDic.SelectedItem as Dictionary;
+            dialog.ShowDialog();
+
+            if (dialog.Resoult != System.Windows.Forms.DialogResult.OK) return;
+
+            DB.GetInstance().Push(dialog.DictionaryInfo);
+            DB.GetInstance().Commit();
+        }
+
         /// <summary>Проиходит при выборе фильтра отображения слов в словаре (Все/Слова/Фразы/Предл.)</summary>
         private void WordFilter_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.Ribbon.RibbonToggleButton btn = sender as System.Windows.Controls.Ribbon.RibbonToggleButton;
             if (btn == null) return;
 
-            foreach (var item in this.group4_ribbonFiltersGroup.Items)
+            StackPanel st_panel = btn.Parent as StackPanel;
+
+            if (st_panel == null) return;
+
+            foreach (var item in st_panel.Children)
                 if ((item as System.Windows.Controls.Ribbon.RibbonToggleButton) != btn)
                     (item as System.Windows.Controls.Ribbon.RibbonToggleButton).IsChecked = false;
 
@@ -279,6 +341,11 @@ namespace PersonalDictionary
 
         #region Инкапсуляция
 
+        /// <summary>Определяет контекстное меню для элементов DataGrid</summary>
+        void InitDataGridContextMenu()
+        {
+        }
+
         /// <summary>Перезаписывает все ObservableCollection коллекции. Выполнять после DB.Commit()</summary>
         void OnDBUpdate()
         {
@@ -338,6 +405,27 @@ namespace PersonalDictionary
             else return true;
         }
 
+        private bool NoLearned(Word w)
+        {
+            var progress = Extensions.CalcProgress(w);
+            if (progress == WordProgress.No) return true;
+            else return false;
+        }
+
+        private bool OnLearning(Word w)
+        {
+            var progress = Extensions.CalcProgress(w);
+            if (progress == WordProgress.Low || progress == WordProgress.High) return true;
+            else return false;
+        }
+
+        private bool Learned(Word w)
+        {
+            var progress = Extensions.CalcProgress(w);
+            if (progress == WordProgress.Full) return true;
+            else return false;
+        }
+
         private bool ResoultFilter(Object obj)
         {
             Word w = obj as Word;
@@ -359,6 +447,13 @@ namespace PersonalDictionary
                 filters.Add(IsPhrasesFilter);
             else if (group4_sentences_btn.IsChecked == true)
                 filters.Add(IsSentencesFilter);
+
+            if (group4_NotLearned_btn.IsChecked == true)
+                filters.Add(NoLearned);
+            else if (group4_OnLearn_btn.IsChecked == true)
+                filters.Add(OnLearning);
+            else if (group4_Learned_btn.IsChecked == true)
+                filters.Add(Learned);
 
             bool flag = true;
 
@@ -412,46 +507,5 @@ namespace PersonalDictionary
         }
 
         #endregion
-
-
-        /// <summary>Создает новый словарь</summary>
-        private void Add_dictionary_Click(object sender, RoutedEventArgs e)
-        {
-            CreateEditDictionaryWindow dialog = new CreateEditDictionaryWindow();
-            dialog.ShowDialog();
-
-            if (dialog.Resoult != System.Windows.Forms.DialogResult.OK) return;
-            DB.GetInstance().Push(dialog.DictionaryInfo);
-            DB.GetInstance().Commit();
-        }
-
-        /// <summary>Удаляет выбранный словарь</summary>
-        private void Del_dictionary_Click(object sender, RoutedEventArgs e)
-        {
-            DictionaryInfo info;
-            info.Dictionary = this.group5_SelectedDic.SelectedItem as Dictionary;
-
-            if (info.Dictionary == DB.GetInstance().CurrentDictionaty || info.Dictionary.COST)
-            {
-                MessageBox.Show("Невозможно удалить выбранный и системный словарь", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            DB.GetInstance().Delete(info);
-            DB.GetInstance().Commit();
-        }
-
-        /// <summary>Изменяет выбранный словарь</summary>
-        private void Edit_dictionary_Click(object sender, RoutedEventArgs e)
-        {
-            CreateEditDictionaryWindow dialog = new CreateEditDictionaryWindow();
-            dialog.Dictionary = this.group5_SelectedDic.SelectedItem as Dictionary;
-            dialog.ShowDialog();
-
-            DB.GetInstance().Push(dialog.DictionaryInfo);
-            DB.GetInstance().Commit();
-        }
     }
-
-
 }

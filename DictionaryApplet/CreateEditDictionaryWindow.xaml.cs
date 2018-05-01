@@ -26,6 +26,19 @@ namespace PersonalDictionary
         public CreateEditDictionaryWindow()
         {
             InitializeComponent();
+
+            this.IsVisibleChanged += CreateEditDictionaryWindow_IsVisibleChanged;
+
+
+        }
+
+        private void CreateEditDictionaryWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Dictionary != null)
+            {
+                this.descr_tb.Text = Dictionary.Description;
+                this.name_tb.Text = Dictionary.Name;
+            }
         }
 
         private void Ok_btn_Click(object sender, RoutedEventArgs e)
