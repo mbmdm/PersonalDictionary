@@ -13,9 +13,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <WrapPanel >
-            <TextBlock TextWrapping="Wrap" Text="Выберите апплеты (треннажеры), которые будут учитываться при расчете прогресса" FontStyle="Italic" />
+            <TextBlock TextWrapping="Wrap" Text="Выберите треннажеры, которые будут учитываться при расчете итогового прогресса каждого слова в словаре" FontStyle="Italic" />
         </WrapPanel>
-        
         <Grid Margin="5,20" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

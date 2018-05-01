@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="CreateEditDictionaryWindow.xaml.cs">
+      <DependentUpon>CreateEditDictionaryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DateToDataGridConverter.cs" />
     <Compile Include="DicWindow.xaml.cs">
       <DependentUpon>DicWindow.xaml</DependentUpon>
@@ -90,6 +93,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CreateEditDictionaryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DicWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,6 +138,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\edit2.png" />
+    <Resource Include="img\edit3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

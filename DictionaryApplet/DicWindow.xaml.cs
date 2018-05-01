@@ -68,6 +68,19 @@ namespace PersonalDictionary
 
         #region Events
 
+        /// <summary>Проиходит при выборе фильтра отображения слов в словаре (Все/Слова/Фразы/Предл.)</summary>
+        private void WordFilter_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.Ribbon.RibbonToggleButton btn = sender as System.Windows.Controls.Ribbon.RibbonToggleButton;
+            if (btn == null) return;
+
+            foreach (var item in this.group4_ribbonFiltersGroup.Items)
+                if ((item as System.Windows.Controls.Ribbon.RibbonToggleButton) != btn)
+                    (item as System.Windows.Controls.Ribbon.RibbonToggleButton).IsChecked = false;
+
+            SetDataGridFilters();
+        }
+
         /// <summary>После изменения выбора текущего словаря</summary>
         private void CurrentDictionaryChange_Click(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -289,20 +302,70 @@ namespace PersonalDictionary
 
             var targetWords = DB.GetInstance().CurrentDictionaty.Words;
 
-            if (!this.group3_DisplayNotDicWords_cb.IsChecked == true)
-            {
-                var test = view.SourceCollection;
+            view.Filter = ResoultFilter;
+        }
 
-                view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
-                                       (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
-                                       targetWords.Contains(str as Word));
-            }
+        private bool DefaultFilter(Word w)
+        {
+            return (w.En.ToLower().Contains(en_tb.Text.ToLower()) && w.Ru.ToLower().Contains(ru_tb.Text.ToLower()));
+        }
+
+        private bool IsWordFilter(Word w)
+        {
+            string[] str = w.En.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (str.Length == 1) return true;
+            if (str.Length == 2 && (str[0] == "a" || str[0] == "an" || str[0] == "the")) return true;
+
+            return false;
+        }
+
+        private bool IsPhrasesFilter(Word w)
+        {
+            if (IsWordFilter(w)) return false;
+
+            string puntuation = ".?!";
+
+            char lastWordChar = w.En[w.En.Length - 1];
+
+            if (puntuation.Contains(lastWordChar)) return false;
+            else return true;
+
+        }
+
+        private bool IsSentencesFilter(Word w)
+        {
+            if (IsWordFilter(w) || IsPhrasesFilter(w)) return false;
+            else return true;
+        }
+
+        private bool ResoultFilter(Object obj)
+        {
+            Word w = obj as Word;
+
+            var targetWords = DB.GetInstance().CurrentDictionaty.Words;
+
+            List<Predicate<Word>> filters = new List<Predicate<Word>>();
+
+            filters.Add(DefaultFilter);
+
+            if (!this.group3_DisplayNotDicWords_cb.IsChecked == true)
+                filters.Add(word => targetWords.Contains(word));
             else
-            {
-                view.Filter = str => ((str as Word).En.ToLower().Contains(en_tb.Text.ToLower()) &&
-                                      (str as Word).Ru.ToLower().Contains(ru_tb.Text.ToLower()) &&
-                                      !targetWords.Contains(str as Word));
-            }
+                filters.Add(word => !targetWords.Contains(word));
+
+            if (group4_words_btn.IsChecked == true)
+                filters.Add(IsWordFilter);
+            else if (group4_phrases_btn.IsChecked == true)
+                filters.Add(IsPhrasesFilter);
+            else if (group4_sentences_btn.IsChecked == true)
+                filters.Add(IsSentencesFilter);
+
+            bool flag = true;
+
+            foreach (var item in filters)
+                flag &= item(w);
+
+            return flag;
         }
 
         /// <summary>Согласует свойства IsEnabled в различных элементов диалогового окна</summary>
@@ -351,6 +414,43 @@ namespace PersonalDictionary
         #endregion
 
 
+        /// <summary>Создает новый словарь</summary>
+        private void Add_dictionary_Click(object sender, RoutedEventArgs e)
+        {
+            CreateEditDictionaryWindow dialog = new CreateEditDictionaryWindow();
+            dialog.ShowDialog();
+
+            if (dialog.Resoult != System.Windows.Forms.DialogResult.OK) return;
+            DB.GetInstance().Push(dialog.DictionaryInfo);
+            DB.GetInstance().Commit();
+        }
+
+        /// <summary>Удаляет выбранный словарь</summary>
+        private void Del_dictionary_Click(object sender, RoutedEventArgs e)
+        {
+            DictionaryInfo info;
+            info.Dictionary = this.group5_SelectedDic.SelectedItem as Dictionary;
+
+            if (info.Dictionary == DB.GetInstance().CurrentDictionaty || info.Dictionary.COST)
+            {
+                MessageBox.Show("Невозможно удалить выбранный и системный словарь", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            DB.GetInstance().Delete(info);
+            DB.GetInstance().Commit();
+        }
+
+        /// <summary>Изменяет выбранный словарь</summary>
+        private void Edit_dictionary_Click(object sender, RoutedEventArgs e)
+        {
+            CreateEditDictionaryWindow dialog = new CreateEditDictionaryWindow();
+            dialog.Dictionary = this.group5_SelectedDic.SelectedItem as Dictionary;
+            dialog.ShowDialog();
+
+            DB.GetInstance().Push(dialog.DictionaryInfo);
+            DB.GetInstance().Commit();
+        }
     }
 
 

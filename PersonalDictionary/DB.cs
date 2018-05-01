@@ -263,7 +263,7 @@ namespace PersonalDictionary
             doc.Element(root_xml_name).Add(new XElement(xml_personal_dictionaries_name));
             var root = doc.Element(root_xml_name).Element(xml_personal_dictionaries_name);
 
-            #region Часть 1. Вносятся изменения в существующие словари
+            #region Часть 1. Вносятся изменения в существующие словари и создаются новые
 
             DictionariesInfo.Where(i => (i.Dictionary != null)).ToList().ForEach(delegate (DictionaryInfo info)
             {
@@ -285,6 +285,15 @@ namespace PersonalDictionary
                         info.Dictionary.Words.Remove(w);
                     });
                 }
+            });
+
+            DictionariesInfo.Where(i => (i.Dictionary == null)).ToList().ForEach(delegate (DictionaryInfo info)
+            {
+                Dictionary dic = new Dictionary();
+                dic.Name = info.Name;
+                dic.Description = info.Description;
+
+                this.Dictionaties.Add(dic);
             });
 
             #endregion

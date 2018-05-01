@@ -1,10 +1,11 @@
-﻿<Window x:Class="PersonalDictionary.DicWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:PersonalDictionary;assembly=dictionary_applet"
         xmlns:l="clr-namespace:TestNameSpace"
         xmlns:s="clr-namespace:System;assembly=mscorlib"
-        Title="Словарь" Height="600" Width="800">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="PersonalDictionary.DicWindow"
+        Title="Словарь" Height="600" Width="867.333">
     <Window.Resources>
         <l:Class1 x:Key="class1"/>
     </Window.Resources>
@@ -19,7 +20,7 @@
                     <RibbonApplicationMenuItem Header="Выход" ImageSource="img\exit.png" Click="ShutDownAppication_Click"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Header="Главное" >
+            <RibbonTab Header="Главное" d:IsHidden="True" >
                 <RibbonGroup Header="" >
                     <StackPanel Orientation="Horizontal" Margin="0,10,10,0">
                         <Grid Width="300">
@@ -51,24 +52,54 @@
                         </Grid.RowDefinitions>
                         <RibbonComboBox Label="Мой словарь" Margin="0,10,0,0">
                             <RibbonGallery x:Name="current_dic_cb" SelectionChanged="CurrentDictionaryChange_Click">
-                                <RibbonGalleryCategory ItemsSource="{Binding Path=Dictionaries}"/>
+                                <RibbonGalleryCategory ItemsSource="{Binding Dictionaries}"/>
                             </RibbonGallery>
                         </RibbonComboBox>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,0">
-                            <RibbonCheckBox  x:Name="group3_DisplayNotDicWords_cb" Label="Не в словаре" Click="ShowNotInDicWords_Click" HorizontalAlignment="Left" ToolTip="Отображает слова, не входящие в текущий словарь"></RibbonCheckBox>
+                            <RibbonCheckBox  x:Name="group3_DisplayNotDicWords_cb" Label="Не в словаре" Click="ShowNotInDicWords_Click" HorizontalAlignment="Left" ToolTip="Отображает слова, не входящие в текущий словарь"/>
                             <RibbonButton x:Name="group3_plus_btn" SmallImageSource="img\plus.png"  Click="Add_word_to_dic_Click" Margin="5,0,20,0" ToolTip="Включает выбранные слова в текущий словарь" />
                             <RibbonButton x:Name="group3_min_btn" SmallImageSource="img\mines.png"  Click="Del_word_from_dic_Click" ToolTip="Удаляет выбранные слова из текущего словаря"/>
                         </StackPanel>
                     </Grid>
+                </RibbonGroup>
+                <RibbonGroup >
+                    <RibbonControlGroup x:Name="group4_ribbonFiltersGroup" Margin="0,25,0,0" FontSize="14" Height="35" >
+                        <RibbonControlGroup.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </RibbonControlGroup.ItemsPanel>
+                        <RibbonToggleButton x:Name="group4_words_btn" Label="Слова" Width="60" Click="WordFilter_Click"/>
+                        <RibbonToggleButton x:Name="group4_phrases_btn" Label="Фразы" Width="60" Click="WordFilter_Click"/>
+                        <RibbonToggleButton x:Name="group4_sentences_btn" Label="Предл." Width="60" Click="WordFilter_Click"/>
+                    </RibbonControlGroup>
                 </RibbonGroup>
             </RibbonTab>
             <RibbonTab Header="Настройки">
                 <RibbonGroup  VerticalAlignment="Stretch" HorizontalContentAlignment="Center">
                     <RibbonButton LargeImageSource="img\edit.png" Label="Расчет прогресса" Click="CalcWordProgressSettingsDialog_Click" />
                 </RibbonGroup>
+                <RibbonGroup Header="Словари"  VerticalAlignment="Stretch" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ComboBox  Name="group5_SelectedDic" Margin="0,10,0,0" ItemsSource="{Binding Dictionaries}" SelectedItem="{Binding Item}">
+                            <!--<RibbonGallery>
+                                <RibbonGalleryCategory ItemsSource="{Binding Dictionaries}"/>
+                            </RibbonGallery>-->
+                        </ComboBox>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+                            <RibbonButton Name="group5_plus_btn" SmallImageSource="img\plus.png" ToolTip="Добавить новый словарь" Click="Add_dictionary_Click"/>
+                            <RibbonButton Name="group5_min_btn" SmallImageSource="img\mines.png" Margin="5,0,0,0" ToolTip="Удалить выбранный словарь" Click="Del_dictionary_Click"/>
+                            <RibbonButton Name="group5_edit_btn" SmallImageSource="img\edit3.png" Margin="5,0,0,0" ToolTip="Изменить выбранный словарь" Click="Edit_dictionary_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Extended"  
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Extended"  
                   SelectionUnit="FullRow" IsReadOnly="False" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                   VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.ScrollUnit="Item"  SelectedCellsChanged="DataGrid_SelectedChanged" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.GroupStyle>
@@ -80,7 +111,7 @@
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
                                         <Expander IsExpanded="True">
                                             <Expander.Header>
-                                                <TextBlock Text="{Binding Path=Name}"/>
+                                                <TextBlock Text="{Binding Name}"/>
                                             </Expander.Header>
                                             <ItemsPresenter />
                                         </Expander>
