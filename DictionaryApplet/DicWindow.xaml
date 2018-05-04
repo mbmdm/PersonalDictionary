@@ -145,7 +145,13 @@
                 <DataGridTextColumn Header="Перевод (рус.)" Binding="{Binding Ru}" Width="400" IsReadOnly="True"/>
                 <!--<DataGridTextColumn Header="Добавлено" Binding="{Binding Add}" Width="200" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Изменено" Binding="{Binding Modified}" Width="200" IsReadOnly="False"/>-->
-                <DataGridTextColumn Header="Прогресс" Binding="{Binding Converter={StaticResource class1}}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Прогресс" Binding="{Binding Converter={StaticResource class1}}" IsReadOnly="True" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <!--<DataGridTemplateColumn Header="Прогресс">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
