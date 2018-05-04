@@ -8,7 +8,7 @@ namespace PersonalDictionary
 {
     public class Word : IComparable, ICloneable
     {
-        internal int ID { get; set; }
+        public int ID { get; internal set; }
         public string En { get; internal set; }
         public string Ru { get; internal set; }
         public DateTime Add { get; internal set; }

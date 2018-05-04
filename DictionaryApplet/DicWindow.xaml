@@ -141,6 +141,13 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Binding="{Binding ID}"  Width="35" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Слово (англ.)" Binding="{Binding En}"  Width="200" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Перевод (рус.)" Binding="{Binding Ru}" Width="400" IsReadOnly="True"/>
                 <!--<DataGridTextColumn Header="Добавлено" Binding="{Binding Add}" Width="200" IsReadOnly="True"/>
