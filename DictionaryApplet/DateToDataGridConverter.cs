@@ -23,7 +23,7 @@ namespace PersonalDictionary
         {
             if (value is DateTime)
             {
-                string[] variants = { "Сегодня", "Вчера", "Месяц назад", "Год назад", "Давно" };
+                string[] variants = { "Сегодня", "Вчера", "Не этой недели", "В этом месяца", "В этом году", "Давным давно" };
 
                 DateTime date = new DateTime(((DateTime)value).Year, ((DateTime)value).Month, ((DateTime)value).Day);
                 DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
@@ -32,12 +32,14 @@ namespace PersonalDictionary
                     return variants[0];
                 else if ((now - date).Days == 1)
                     return variants[1];
-                else if ((now - date).Days < 30)
+                else if ((now - date).Days <= 7)
                     return variants[2];
-                else if ((now - date).Days < 362)
+                else if ((now - date).Days <= 30)
                     return variants[3];
-                else if ((now - date).Days >= 362)
+                else if ((now - date).Days <= 365)
                     return variants[4];
+                else
+                    return variants[5];
 
                 return "sort error";
             }
