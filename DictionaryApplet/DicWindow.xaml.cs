@@ -150,6 +150,8 @@ namespace PersonalDictionary
 
             if (dic == null) return;
 
+            this.group3_DisplayNotDicWords_cb.IsChecked = false;
+
             DB.GetInstance().CurrentDictionaty = dic;
 
             SetDataGridFilters();
@@ -183,7 +185,23 @@ namespace PersonalDictionary
 
             DB.GetInstance().Push(info);
 
-            DB.GetInstance().Commit();            
+            DB.GetInstance().Commit();
+
+            //Добавляем полученное слово в текущий словарь, если он  не cost
+            if (DB.GetInstance().CurrentDictionaty.COST) return;
+
+            Word w = DB.GetInstance().Words[DB.GetInstance().Words.Count - 1];
+
+            var resoult = MessageBox.Show("Добавить слово \"" + w.En + "\" в текущий словарь", "Выбор действия", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (resoult != MessageBoxResult.Yes) return;
+
+            DictionaryInfo dicinfo;
+            dicinfo.Dictionary = DB.GetInstance().CurrentDictionaty;
+            dicinfo.WordsNew = new List<Word>(); dicinfo.WordsNew.Add(DB.GetInstance().Words[DB.GetInstance().Words.Count - 1]);
+
+            DB.GetInstance().Push(dicinfo);
+            DB.GetInstance().Commit();
         }
 
         /// <summary>Удаляет слово из БД</summary>
