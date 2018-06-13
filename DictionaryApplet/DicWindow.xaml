@@ -34,8 +34,8 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Англ." Margin="0,0,5,0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" />
                             <TextBlock Text="Рус." Margin="0,0,5,0" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"  />
-                            <TextBox Text="" x:Name="en_tb" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="WordFilter_TextChanged"/>
-                            <TextBox Text="" x:Name="ru_tb" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="WordFilter_TextChanged" />
+                            <TextBox Text="" x:Name="en_tb" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="WordFilter_TextChanged" KeyDown="en_tb_KeyDown"/>
+                            <TextBox Text="" x:Name="ru_tb" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="1" FontSize="12" Height="24" TextChanged="WordFilter_TextChanged" KeyDown="ru_tb_KeyDown"/>
                             <!--<RibbonButton SmallImageSource="img\mines.png" Label="  Удалить слово"  Click="del_word_Click"/>-->
                         </Grid>
 

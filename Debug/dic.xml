@@ -1,32 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <library>
   <GlobalDictionary>
-    <word id="1" en="Word1" ru="Слово1" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
-    <word id="2" en="Word2" ru="Слово2" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
-    <word id="3" en="Word3" ru="Слово3" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
-    <word id="4" en="Word4" ru="Слово4" date_add="2018-04-10T13:05:04" date_modified="2018-04-24T23:15:38" />
-    <word id="5" en="word5" ru="Слово5" date_add="2018-04-25T21:15:00" date_modified="2018-04-25T21:15:00" />
+    <word id="1" en="cope with (something)" ru="справиться с (чем-либо)" date_add="2018-05-03T22:15:35" date_modified="2018-05-03T22:15:35" />
+    <word id="2" en="manage to (do something)" ru="суметь / смочь (сделать что-то / в состоянии справиться с трудной ситуацией или найти время на ее решение) [глаг.]" date_add="2018-05-03T22:16:30" date_modified="2018-05-14T12:55:35.7529041+03:00" />
+    <word id="3" en="incorrectly" ru="неправильно" date_add="2018-05-03T22:18:17" date_modified="2018-05-03T22:18:17" />
+    <word id="4" en="conclusion" ru="вывод / заключение" date_add="2018-05-03T22:20:09" date_modified="2018-05-03T22:20:09" />
+    <word id="5" en="spend on (something)" ru="тратить на (что-либо)" date_add="2018-05-03T22:28:03" date_modified="2018-05-03T22:28:03" />
+    <word id="6" en="make mistakes" ru="делать ошибки" date_add="2018-05-03T22:29:47" date_modified="2018-05-03T22:29:47" />
+    <word id="7" en="complain" ru="жаловаться" date_add="2018-05-03T22:55:40" date_modified="2018-05-03T22:55:40" />
+    <word id="8" en="react to (something)" ru="реагировать на (что-то)" date_add="2018-05-03T22:57:30" date_modified="2018-05-03T22:57:30" />
+    <word id="9" en="necessary" ru="необходимо" date_add="2018-05-03T23:00:44" date_modified="2018-05-03T23:00:44" />
+    <word id="10" en="able to (do something)" ru="способный (что-то сделать) [прилаг.]" date_add="2018-05-05T00:25:41" date_modified="2018-05-05T00:25:41" />
+    <word id="11" en="intensively" ru="интенсивно" date_add="2018-05-05T00:27:52" date_modified="2018-05-05T00:27:52" />
+    <word id="12" en="such as" ru="такие как / такой как" date_add="2018-05-05T00:41:59" date_modified="2018-05-05T00:41:59" />
+    <word id="13" en="incredibly" ru="невероятно" date_add="2018-05-05T00:49:19" date_modified="2018-05-05T00:49:19" />
+    <word id="14" en="with great pleasure" ru="с большим удовольствием" date_add="2018-05-05T01:03:26" date_modified="2018-05-05T01:03:26" />
+    <word id="15" en="reach" ru="достигать" date_add="2018-05-05T01:04:15" date_modified="2018-05-05T01:04:15" />
+    <word id="16" en="greatly" ru="очень (очень сильно) / значительно" date_add="2018-05-05T01:06:49" date_modified="2018-05-05T01:06:49" />
+    <word id="17" en="take the first place" ru="занять первое место" date_add="2018-05-05T01:08:36" date_modified="2018-05-05T01:08:36" />
+    <word id="18" en="again and again" ru="снова и снова" date_add="2018-05-05T01:10:06" date_modified="2018-05-05T01:10:06" />
+    <word id="19" en="apologize for (something)" ru="извиниться за (что-то)" date_add="2018-05-05T01:11:49" date_modified="2018-05-05T01:11:49" />
+    <word id="20" en="introduce" ru="знакомить / представлять" date_add="2018-05-05T01:13:21" date_modified="2018-05-05T01:13:21" />
+    <word id="21" en="interest" ru="интерес / интересовать" date_add="2018-05-05T01:14:15" date_modified="2018-05-05T01:14:15" />
+    <word id="22" en="quite soon" ru="очень скоро" date_add="2018-05-05T01:17:10" date_modified="2018-05-05T01:17:10" />
+    <word id="23" en="sooner or later" ru="рано или поздно" date_add="2018-05-05T01:22:39" date_modified="2018-05-05T01:22:39" />
+    <word id="24" en="I keep my word." ru="Я держу свое слово." date_add="2018-05-05T01:23:44" date_modified="2018-05-05T01:39:04.6409674+03:00" />
+    <word id="25" en="expect" ru="ожидать" date_add="2018-05-05T01:24:35" date_modified="2018-05-05T01:24:35" />
+    <word id="26" en="improve" ru="улучшать" date_add="2018-05-05T01:24:53" date_modified="2018-05-05T01:24:53" />
+    <word id="27" en="with help of (something)" ru="с помощью (чего-то)" date_add="2018-05-05T01:26:25" date_modified="2018-05-05T01:26:25" />
+    <word id="28" en="parcel" ru="посылка" date_add="2018-05-05T01:35:33" date_modified="2018-05-05T01:35:33" />
+    <word id="29" en="with great pleashure (do something)" ru="с большим удовольствием (делать что-то)" date_add="2018-05-05T01:49:40" date_modified="2018-05-05T01:53:26.7679418+03:00" />
+    <word id="30" en="We'll take the first place." ru="Мы займем первое место." date_add="2018-05-05T02:00:47" date_modified="2018-05-05T02:00:47" />
+    <word id="31" en="deserve" ru="заслуживать" date_add="2018-05-05T02:04:19" date_modified="2018-05-05T02:04:19" />
+    <word id="32" en="waste" ru="тратить впустую" date_add="2018-05-06T00:26:02" date_modified="2018-05-06T00:26:02" />
+    <word id="33" en="in one day" ru="за один день" date_add="2018-05-06T00:28:06" date_modified="2018-05-06T00:28:06" />
+    <word id="34" en="in a week" ru="за неделю" date_add="2018-05-06T00:28:54" date_modified="2018-05-06T00:28:54" />
+    <word id="35" en="answer to this question" ru="ответ на этот вопрос" date_add="2018-05-06T00:31:35" date_modified="2018-05-06T00:31:35" />
+    <word id="36" en="solution of to this problem" ru="решение этой проблемы" date_add="2018-05-06T00:33:05" date_modified="2018-05-06T00:33:05" />
+    <word id="37" en="work on (something)" ru="работать над (чем-то)" date_add="2018-05-06T00:37:47" date_modified="2018-05-06T00:37:47" />
+    <word id="38" en="fist of all" ru="прежде всего" date_add="2018-05-06T00:38:33" date_modified="2018-05-06T00:38:33" />
+    <word id="39" en="solution to (something)" ru="решение (чего-либо)" date_add="2018-05-07T12:57:30" date_modified="2018-05-07T12:57:30" />
+    <word id="40" en="solution to this problem" ru="решение этой проблемы" date_add="2018-05-07T12:58:07" date_modified="2018-05-07T12:58:07" />
+    <word id="41" en="It'll take you longer." ru="Это займет больше времени." date_add="2018-05-07T13:03:26" date_modified="2018-05-07T13:03:26" />
+    <word id="42" en="she won't get (something)" ru="она не получит (чего-либо)" date_add="2018-05-07T13:17:01" date_modified="2018-05-07T13:17:01" />
+    <word id="43" en="she won't take (something)" ru="она не возьмет (что-либо)" date_add="2018-05-07T13:29:32" date_modified="2018-05-07T13:29:32" />
+    <word id="44" en="with greate pleasure" ru="с большим удовольствием" date_add="2018-05-07T13:52:24" date_modified="2018-05-07T13:52:24" />
+    <word id="45" en="vote for (someone)" ru="голосовать за (кого-то)" date_add="2018-05-08T13:21:53" date_modified="2018-05-08T13:21:53" />
+    <word id="46" en="take part" ru="принимать участие" date_add="2018-05-08T13:23:09" date_modified="2018-05-08T13:23:09" />
+    <word id="47" en="elections" ru="выборы" date_add="2018-05-08T13:24:03" date_modified="2018-05-08T13:24:03" />
+    <word id="48" en="participate" ru="учавствовать" date_add="2018-05-08T13:24:34" date_modified="2018-05-08T13:24:34" />
+    <word id="49" en="outstanding" ru="выдающиеся" date_add="2018-05-08T13:28:29" date_modified="2018-05-08T13:28:29" />
+    <word id="50" en="develop" ru="развивать" date_add="2018-05-08T13:52:34" date_modified="2018-05-08T13:52:34" />
+    <word id="51" en="one more" ru="еще одно" date_add="2018-05-08T13:53:00" date_modified="2018-05-08T13:53:00" />
+    <word id="52" en="lend - lent - lent" ru="одалживать, дать в займы" date_add="2018-05-08T13:54:11" date_modified="2018-05-08T13:54:11" />
+    <word id="53" en="goods" ru="товары, вещи" date_add="2018-05-08T13:58:19" date_modified="2018-05-08T13:58:37.5416502+03:00" />
+    <word id="54" en="explain" ru="объяснять" date_add="2018-05-08T14:00:35" date_modified="2018-05-08T14:00:35" />
+    <word id="55" en="express" ru="выражать, высказывать" date_add="2018-05-08T14:01:13" date_modified="2018-05-08T14:01:13" />
+    <word id="56" en="share" ru="делиться, разделять, поделиться" date_add="2018-05-08T14:01:58" date_modified="2018-05-08T14:01:58" />
+    <word id="57" en="lead - led - led" ru="вести, приводить" date_add="2018-05-08T14:03:06" date_modified="2018-05-08T14:03:06" />
+    <word id="58" en="big loss" ru="большая потеря" date_add="2018-05-08T14:03:59" date_modified="2018-05-08T14:03:59" />
+    <word id="59" en="around the world" ru="по всему миру" date_add="2018-05-08T14:07:27" date_modified="2018-05-08T14:07:27" />
+    <word id="61" en="determine" ru="определять" date_add="2018-05-10T10:44:29" date_modified="2018-05-10T10:44:29" />
+    <word id="62" en="adjusting" ru="приводить в порядок, улаживать, разрешать" date_add="2018-05-10T10:48:58" date_modified="2018-05-10T10:48:58" />
+    <word id="63" en="self-adjusting" ru="саморегулирующий, адаптивный" date_add="2018-05-10T10:49:16" date_modified="2018-05-10T10:49:16" />
+    <word id="64" en="splay" ru="скос, откос [сущ.]" date_add="2018-05-10T10:50:31" date_modified="2018-05-23T23:12:44.1593655+03:00" />
+    <word id="65" en="splay" ru="расширять края отверстия, расширять [глаг.]" date_add="2018-05-10T10:50:52" date_modified="2018-05-31T12:24:41.7677881+03:00" />
+    <word id="66" en="exact" ru="требовать, добиваться [глаг.]" date_add="2018-05-10T10:53:32" date_modified="2018-05-31T12:24:32.9130175+03:00" />
+    <word id="67" en="exact" ru="точный, аккуратный, верный, четкий [прилаг.]" date_add="2018-05-10T10:54:06" date_modified="2018-05-23T23:12:18.7055509+03:00" />
+    <word id="68" en="supply" ru="поставлять (товары)" date_add="2018-05-14T12:41:48" date_modified="2018-05-14T12:41:48" />
+    <word id="69" en="It will help me improve my English." ru="Это поможет мне улучшить мой английский." date_add="2018-05-14T12:48:21" date_modified="2018-05-21T14:42:18.0272037+03:00" />
+    <word id="70" en="work from home" ru="работать из дома" date_add="2018-05-21T15:06:42" date_modified="2018-05-21T15:06:42" />
+    <word id="71" en="in the end" ru="в конце" date_add="2018-05-21T15:07:48" date_modified="2018-05-21T15:07:48" />
+    <word id="72" en="make a call" ru="сделать звонок" date_add="2018-05-21T15:17:50" date_modified="2018-05-21T15:17:50" />
+    <word id="73" en="How long will our lesson last?" ru="Насколько долго будет длиться наш урок" date_add="2018-05-21T15:59:32" date_modified="2018-05-21T15:59:32" />
+    <word id="74" en="prepare for (something)" ru="готовиться к (чему-то)" date_add="2018-05-23T18:45:28" date_modified="2018-05-23T18:45:28" />
+    <word id="75" en="What work will you be able to do?" ru="Какую работу ты способен сделать?" date_add="2018-05-23T18:49:08" date_modified="2018-05-23T18:50:39.4435799+03:00" />
+    <word id="76" en="What kind of job will you be able to do?" ru="Какую работу ты способен сделать?" date_add="2018-05-23T18:50:07" date_modified="2018-05-23T18:50:50.8220706+03:00" />
+    <word id="77" en="good enough" ru="достаточно хорошо (удовлетворительно)" date_add="2018-05-23T18:53:48" date_modified="2018-05-23T18:53:48" />
+    <word id="78" en="quite good" ru="довольно хорошо (более чем удовлетворительно)" date_add="2018-05-23T18:54:14" date_modified="2018-05-23T18:54:14" />
+    <word id="79" en="wright down" ru="записать" date_add="2018-05-23T22:53:05" date_modified="2018-05-23T22:53:05" />
+    <word id="80" en="worry about (something)" ru="беспокоиться о (чем-то)" date_add="2018-05-23T23:01:21" date_modified="2018-05-23T23:01:21" />
+    <word id="81" en="income" ru="доход" date_add="2018-05-23T23:10:40" date_modified="2018-05-23T23:10:40" />
+    <word id="82" en="honestly" ru="честно [нареч.]" date_add="2018-05-23T23:11:42" date_modified="2018-05-23T23:12:28.8198782+03:00" />
+    <word id="83" en="proud of (something / someone)" ru="гордиться (чем-то / кем-то)" date_add="2018-05-24T00:08:07" date_modified="2018-05-24T00:08:07" />
+    <word id="84" en="correct" ru="исправлять" date_add="2018-05-30T23:13:55" date_modified="2018-05-30T23:13:55" />
+    <word id="85" en="apologize" ru="принести извинения" date_add="2018-05-31T12:22:59" date_modified="2018-05-31T12:22:59" />
+    <word id="86" en="articulate" ru="артикулировать, выговорить, ясно выражать [глаг.]" date_add="2018-05-31T12:24:16" date_modified="2018-05-31T12:24:16" />
+    <word id="87" en="establish" ru="установить, создавать, основывать" date_add="2018-05-31T12:25:35" date_modified="2018-05-31T12:25:35" />
+    <word id="88" en="play the guitar" ru="играть на гитаре (the перед всеми музыкальными инструментами)" date_add="2018-05-31T14:57:51" date_modified="2018-05-31T14:58:03.5459995+03:00" />
+    <word id="89" en="She goes to the park." ru="Она ходит в парк." date_add="2018-06-01T11:45:53" date_modified="2018-06-01T11:46:37.6235439+03:00" />
+    <word id="90" en="She goes to the theater." ru="Она ходит в театр." date_add="2018-06-01T11:46:30" date_modified="2018-06-01T11:46:30" />
+    <word id="91" en="She goes to the cinema." ru="Она ходит в кино." date_add="2018-06-01T11:47:42" date_modified="2018-06-01T11:47:42" />
+    <word id="92" en="He works much." ru="Он работает много (в негативном смысле)." date_add="2018-06-01T11:53:06" date_modified="2018-06-01T11:53:06" />
+    <word id="93" en="He works hard." ru="Он работае усердно." date_add="2018-06-01T11:54:13" date_modified="2018-06-01T11:54:13" />
+    <word id="94" en="He works a lot." ru="Он работает много." date_add="2018-06-01T11:54:32" date_modified="2018-06-01T11:54:32" />
+    <word id="95" en="vovel" ru="гласная буква" date_add="2018-06-01T12:05:24" date_modified="2018-06-01T12:05:24" />
+    <word id="96" en="consonant" ru="согласная буква" date_add="2018-06-01T12:34:35" date_modified="2018-06-01T12:34:35" />
+    <word id="97" en="wash up the dishes" ru="вымыть посуду" date_add="2018-06-01T12:50:22" date_modified="2018-06-01T12:50:22" />
+    <word id="98" en="study at (somewhere)" ru="учиться в (где-то)" date_add="2018-06-04T11:06:36" date_modified="2018-06-04T11:08:08.256653+03:00" />
+    <word id="99" en="would like to (do something)" ru="хотелы бы (сделать что-то)" date_add="2018-06-06T12:16:59" date_modified="2018-06-06T12:16:59" />
+    <word id="100" en="book in English" ru="книга на английском" date_add="2018-06-06T12:21:16" date_modified="2018-06-06T12:21:16" />
+    <word id="101" en="listen to music" ru="слушать музыку" date_add="2018-06-06T12:29:00" date_modified="2018-06-06T12:29:00" />
+    <word id="102" en="listen to this song" ru="послушать эту песню" date_add="2018-06-06T12:29:22" date_modified="2018-06-06T12:29:22" />
+    <word id="103" en="all day" ru="весь день" date_add="2018-06-07T21:37:55" date_modified="2018-06-07T21:37:55" />
+    <word id="104" en="on foot" ru="пешком" date_add="2018-06-07T21:38:21" date_modified="2018-06-07T21:38:21" />
+    <word id="105" en="go shopping" ru="ходить за покупками" date_add="2018-06-07T21:39:35" date_modified="2018-06-07T21:39:35" />
+    <word id="106" en="go ahead" ru="двигаться (идти) вперед" date_add="2018-06-07T21:40:02" date_modified="2018-06-07T21:40:02" />
+    <word id="107" en="She goes to the party." ru="Она ходит на вечеринку." date_add="2018-06-07T21:41:30" date_modified="2018-06-07T21:41:30" />
+    <word id="108" en="go to school" ru="идти в школу" date_add="2018-06-07T21:43:11" date_modified="2018-06-07T21:43:11" />
+    <word id="109" en="go to work" ru="идти на работу" date_add="2018-06-07T21:43:23" date_modified="2018-06-07T21:43:23" />
+    <word id="110" en="go to the gym" ru="иди в тренажерный зал" date_add="2018-06-07T21:46:46" date_modified="2018-06-07T21:46:46" />
+    <word id="111" en="rarely" ru="редко" date_add="2018-06-09T12:00:07" date_modified="2018-06-09T12:00:07" />
+    <word id="112" en="seldom" ru="редко" date_add="2018-06-09T12:00:19" date_modified="2018-06-09T12:00:19" />
+    <word id="113" en="colleague" ru="коллега" date_add="2018-06-09T12:01:12" date_modified="2018-06-09T12:01:12" />
+    <word id="114" en="classmate" ru="одноклассник" date_add="2018-06-09T12:02:02" date_modified="2018-06-09T12:02:02" />
+    <word id="115" en="learn English fast" ru="изучать английский быстро" date_add="2018-06-09T12:03:04" date_modified="2018-06-09T12:03:04" />
+    <word id="116" en="wait for (something)" ru="ожидать (чего-то)" date_add="2018-06-09T12:19:43" date_modified="2018-06-09T12:19:43" />
+    <word id="117" en="offer" ru="предлагать" date_add="2018-06-09T12:22:14" date_modified="2018-06-09T12:22:14" />
+    <word id="118" en="get to work" ru="добраться до работы" date_add="2018-06-09T12:26:52" date_modified="2018-06-09T12:28:02.574144+03:00" />
+    <word id="119" en="for breakfast" ru="на завтрак" date_add="2018-06-09T12:29:24" date_modified="2018-06-09T12:29:24" />
+    <word id="120" en="tall to him" ru="говорить с ним" date_add="2018-06-09T12:32:38" date_modified="2018-06-09T12:32:38" />
+    <word id="121" en="What do you do at work?" ru="Что ты делаешь на работе?" date_add="2018-06-09T12:35:15" date_modified="2018-06-09T12:35:15" />
+    <word id="122" en="look like" ru="выглядеть" date_add="2018-06-09T12:35:45" date_modified="2018-06-09T12:35:45" />
+    <word id="123" en="time for it" ru="время на это" date_add="2018-06-09T12:36:05" date_modified="2018-06-09T12:36:05" />
+    <word id="124" en="supplier" ru="поставщик / снабженец" date_add="2018-06-09T12:37:08" date_modified="2018-06-09T12:37:08" />
+    <word id="125" en="think another way" ru="думать по другому" date_add="2018-06-09T12:37:54" date_modified="2018-06-09T12:37:54" />
+    <word id="126" en="reply" ru="отвечать (синоним answer)" date_add="2018-06-09T12:38:56" date_modified="2018-06-09T12:38:56" />
+    <word id="127" en="refuse" ru="отказываться" date_add="2018-06-09T12:39:19" date_modified="2018-06-09T12:39:19" />
+    <word id="128" en="certainly" ru="конечно, безусловно" date_add="2018-06-12T18:08:31" date_modified="2018-06-12T18:08:31" />
+    <word id="129" en="of course" ru="конечно, само собой" date_add="2018-06-12T18:09:00" date_modified="2018-06-12T18:09:00" />
+    <word id="130" en="sure" ru="конечно, безусловно" date_add="2018-06-12T18:09:24" date_modified="2018-06-12T18:09:24" />
+    <word id="131" en="We are at the airport." ru="Мы в аэропорту." date_add="2018-06-12T18:23:05" date_modified="2018-06-12T19:31:21.9284996+03:00" />
+    <word id="132" en="ill" ru="больной" date_add="2018-06-12T19:28:41" date_modified="2018-06-12T19:28:41" />
+    <word id="133" en="sick" ru="больной" date_add="2018-06-12T19:29:02" date_modified="2018-06-12T19:29:02" />
+    <word id="134" en="useless" ru="бесполезный" date_add="2018-06-12T19:29:18" date_modified="2018-06-12T19:29:18" />
+    <word id="135" en="useful" ru="полезный" date_add="2018-06-12T19:30:07" date_modified="2018-06-12T19:30:13.9356625+03:00" />
+    <word id="136" en="His brother is in hospital." ru="Его брат находится в больнице." date_add="2018-06-12T19:31:52" date_modified="2018-06-12T19:31:52" />
+    <word id="137" en="My sister is in bed." ru="Моя сестра находится в кровати." date_add="2018-06-12T19:32:27" date_modified="2018-06-12T19:32:27" />
+    <word id="138" en="My mothe is in the bathroom." ru="Моя мама находится в ванной." date_add="2018-06-12T19:43:39" date_modified="2018-06-12T19:43:39" />
+    <word id="139" en="hard-working" ru="трудолюбивый" date_add="2018-06-13T19:41:28" date_modified="2018-06-13T19:41:28" />
+    <word id="140" en="housewife" ru="домохозяйка" date_add="2018-06-13T19:41:47" date_modified="2018-06-13T19:41:47" />
   </GlobalDictionary>
   <PersonalDictionaries>
-    <dictionary name="dic2_changed" descr="descr2_changed" cost="false" words="#1#2#3#5" />
-    <dictionary name="dic3" descr="descr3" cost="false" words="#5#1#2#3" />
-    <dictionary name="dic4" descr="descr4" cost="false" words="" />
     <dictionary name="Все" descr="Все доступные слова" cost="true" words="" />
+    <dictionary name="Неправильные глаголы" descr="-" cost="false" words="#52#57" />
+    <dictionary name="Предлоги" descr="Использование предлогов в словосочетаниях" cost="false" words="#2#1#5#8#10#12#19#27#33#34#35#36#37#39#40#45#69#70#74#80#83#98#100#101#102#116#118#119#120#121#123#131" />
+    <dictionary name="Устойчивые выражения" descr="Устойчивые сочетания слов" cost="false" words="#6#12#14#17#18#22#23#29#38#41#44#46#51#58#59#71#72#89#90#91#92#93#94#97#99#104#105#107#115#122#125" />
+    <dictionary name="Фразовые глаголы" descr="" cost="false" words="#79" />
   </PersonalDictionaries>
   <TraingProgressApplest>
-    <applet uid="test1" display="test1">
-      <appletdata ref="2" progress="100" />
-      <appletdata ref="3" progress="95" />
-      <appletdata ref="4" progress="10" />
-    </applet>
-    <applet uid="test2" display="test2">
-      <appletdata ref="1" progress="11" />
-      <appletdata ref="2" progress="22" />
-    </applet>
-    <applet uid="TestApplet_1" display="TestApplet_1">
-      <appletdata ref="1" progress="99" />
-      <appletdata ref="2" progress="33" />
-    </applet>
     <applet uid="dictionary_applet.PersonalDictionary.DicWindow" display="Словарь" />
   </TraingProgressApplest>
 </library>

@@ -68,6 +68,24 @@ namespace PersonalDictionary
 
         #region Events
 
+        /// <summary>Срабатывает при нажатии клавиши Enter при завершении ввода текств в поле en_tb
+        private void en_tb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && this.ru_tb.Text != string.Empty)
+                this.Add_word_Click(sender, new RoutedEventArgs());
+            else if (e.Key == Key.Escape)
+                this.ru_tb.Text = string.Empty;
+        }
+
+        /// <summary>Срабатывает при нажатии клавиши Enter при завершении ввода текств в поле ru_tb
+        private void ru_tb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && this.en_tb.Text != string.Empty)
+                this.Add_word_Click(sender, new RoutedEventArgs());
+            else if (e.Key == Key.Escape)
+                this.ru_tb.Text = string.Empty;
+        }
+
         /// <summary>Сбрасывает прогресс слова во всех тренажерах</summary>
         private void DropWordProgress_Click(object sender, RoutedEventArgs e)
         {
