@@ -140,12 +140,28 @@
     <word id="138" en="My mothe is in the bathroom." ru="Моя мама находится в ванной." date_add="2018-06-12T19:43:39" date_modified="2018-06-12T19:43:39" />
     <word id="139" en="hard-working" ru="трудолюбивый" date_add="2018-06-13T19:41:28" date_modified="2018-06-13T19:41:28" />
     <word id="140" en="housewife" ru="домохозяйка" date_add="2018-06-13T19:41:47" date_modified="2018-06-13T19:41:47" />
+    <word id="141" en="I am single." ru="Я холост." date_add="2018-06-13T19:58:12" date_modified="2018-06-13T19:58:12" />
+    <word id="142" en="silly" ru="глупый" date_add="2018-06-13T19:58:25" date_modified="2018-06-13T19:58:25" />
+    <word id="143" en="foolish" ru="глупый" date_add="2018-06-13T19:58:37" date_modified="2018-06-13T19:58:37" />
+    <word id="144" en="cleve" ru="умный" date_add="2018-06-13T19:58:58" date_modified="2018-06-13T19:58:58" />
+    <word id="145" en="mistake - mistook - mistaken" ru="ошибаться" date_add="2018-06-13T21:13:07" date_modified="2018-06-13T21:13:07" />
+    <word id="146" en="I am mistaken." ru="Я ошибаюсь." date_add="2018-06-13T21:13:44" date_modified="2018-06-13T21:13:44" />
+    <word id="147" en="obvious" ru="очевидный" date_add="2018-06-13T21:14:24" date_modified="2018-06-13T21:14:24" />
+    <word id="148" en="It is sunny." ru="Солнечно." date_add="2018-06-13T21:15:28" date_modified="2018-06-13T21:16:09.0747172+03:00" />
+    <word id="149" en="It is cloudy." ru="Облачно." date_add="2018-06-13T21:15:44" date_modified="2018-06-13T21:16:04.3265478+03:00" />
+    <word id="150" en="It is windy" ru="Ветренно." date_add="2018-06-13T21:15:57" date_modified="2018-06-13T21:15:57" />
+    <word id="151" en="It is rainy." ru="Идет дождь." date_add="2018-06-13T21:16:35" date_modified="2018-06-13T21:16:35" />
+    <word id="152" en="brilliant" ru="блестящий" date_add="2018-06-13T21:19:27" date_modified="2018-06-13T21:19:27" />
+    <word id="153" en="lifestyle" ru="стиль жизни" date_add="2018-06-13T21:20:22" date_modified="2018-06-13T21:20:22" />
+    <word id="154" en="pregnant" ru="беременная" date_add="2018-06-13T21:20:30" date_modified="2018-06-13T21:20:30" />
+    <word id="155" en="well-paid" ru="хорошо оплачиваемая" date_add="2018-06-13T21:20:46" date_modified="2018-06-13T21:20:46" />
+    <word id="156" en="way of life" ru="образ жизни" date_add="2018-06-13T21:22:22" date_modified="2018-06-13T21:22:22" />
   </GlobalDictionary>
   <PersonalDictionaries>
     <dictionary name="Все" descr="Все доступные слова" cost="true" words="" />
-    <dictionary name="Неправильные глаголы" descr="-" cost="false" words="#52#57" />
+    <dictionary name="Неправильные глаголы" descr="-" cost="false" words="#52#57#145" />
     <dictionary name="Предлоги" descr="Использование предлогов в словосочетаниях" cost="false" words="#2#1#5#8#10#12#19#27#33#34#35#36#37#39#40#45#69#70#74#80#83#98#100#101#102#116#118#119#120#121#123#131" />
-    <dictionary name="Устойчивые выражения" descr="Устойчивые сочетания слов" cost="false" words="#6#12#14#17#18#22#23#29#38#41#44#46#51#58#59#71#72#89#90#91#92#93#94#97#99#104#105#107#115#122#125" />
+    <dictionary name="Устойчивые выражения" descr="Устойчивые сочетания слов" cost="false" words="#6#12#14#17#18#22#23#29#38#41#44#46#51#58#59#71#72#89#90#91#92#93#94#97#99#104#105#107#115#122#125#141" />
     <dictionary name="Фразовые глаголы" descr="" cost="false" words="#79" />
   </PersonalDictionaries>
   <TraingProgressApplest>
